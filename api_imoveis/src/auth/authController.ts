@@ -10,8 +10,7 @@ export const checkJwt = (req, res: Response, next: NextFunction) => {
 
     const token = getTokenFromHeaders(req.headers);
     if(!token) {
-        //return res.status(401).send()
-        return res.status(401).json('Invalid token')
+        return res.status(403).json('token not found')
     }
     try{
         const decoded = verifyJwt(token)
@@ -19,6 +18,6 @@ export const checkJwt = (req, res: Response, next: NextFunction) => {
         next()
     }catch(error){
         res.status(401)
-        return res.json('Invalid token')
+        return res.json('invalid token')
     }
 }

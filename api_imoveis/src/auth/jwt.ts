@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 
-const tokenPrivateKey = 'TY968@#_49VGJwKk21!$5&*=}>,/oIs*665542Içç'
-const refreshTokenPrivateKey = 'fjfjd949t9gkeowc+22#ww1@cv_-77E3'
+const tokenPrivateKey = process.env.JWT_TOKEN_PRIVATE_KEY
+const refreshTokenPrivateKey = process.env.REFRESH_TOKEN_PRIVATE_KEY
 
 const options = { expiresIn: '30 hours'}
 const refreshOptions = { expiresIn: '30 days'}
