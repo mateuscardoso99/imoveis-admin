@@ -1,0 +1,135 @@
+.carousel .slide{
+  background-color: #dfe3e3 !important;
+}
+.carousel img{
+  width: 55% !important;
+}
+
+.loader{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.sidebar {
+height: 100%;
+width: 200px;
+position: fixed;
+z-index: 1;
+top: 0;
+left: 0;
+background-color: rgb(209, 1, 3);
+overflow-x: hidden;
+}
+
+.sidebar a {
+display: block;
+color: white;
+padding: 16px;
+text-decoration: none;
+}
+
+.sidebar a.active {
+background-color: #343a40;
+color: white;
+text-decoration: none;
+}
+
+.sidebar a:hover {
+background-color: #8e8c8c;
+color: white;
+text-decoration: none;
+}
+.card-footer{
+  background-color: #2d3451 !important;
+}
+
+.conteudo form {
+  margin: auto;
+  padding: 60px;
+  background: #B5DBCE;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.conteudo .leaflet-container{
+  width: 100% !important;
+  height: 350px;
+  overflow: hidden;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  z-index: 0;
+}
+
+.conteudo .add{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 17px;
+    font-weight: bold;
+    background-color: rgb(209, 1, 3);
+    border-style: none;
+}
+
+.conteudo .back{
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 17px;
+  font-weight: bold;
+  border-style: none;
+  top: 5px;
+}
+
+.card-img-top{
+  height: 50vh;
+}
+
+
+@media screen and (max-width: 600px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+  }
+
+  .sidebar a {
+    float: left;
+  }
+
+  .conteudo .back{
+    top: 10px;
+  }
+
+  .conteudo .add{
+    right: 10px;
+  }
+}
+
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+
+  .conteudo .back{
+    top: 10px;
+  }
+
+  .conteudo .add{
+    right: 5px;
+  }
+}
