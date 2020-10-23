@@ -36,10 +36,10 @@ class ImoveisController{
     async show(req: Request, res: Response){
         const {id} = req.params
         const imovel = await knex('imovel')
-        .join('categoria', 'imovel.id_categoria','=','categoria.id')
-        .join('corretor','imovel.id_corretor','=','corretor.id')
-        .select('imovel.*', 'categoria.id as categoriaId', 'categoria.tipo', 'corretor.id as corretorId', 'corretor.nome')
-        .where('imovel.id', String(id))
+        .join('categorias', 'imoveis.id_categoria','=','categorias.id')
+        .join('corretores','imoveis.id_corretor','=','corretores.id')
+        .select('imoveis.*', 'categorias.id as categoriaId', 'categorias.tipo', 'corretores.id as corretorId', 'corretores.nome')
+        .where('imoveis.id', String(id))
 
         const serializedImovel = imovel.map(imovel => {
             return{
@@ -51,23 +51,22 @@ class ImoveisController{
     }
 
     async index(req: Request, res: Response){
-        const imoveis = await knex('imovel')
-        .join('categoria', 'imovel.id_categoria','=','categoria.id')
-        .join('corretor','imovel.id_corretor','=','corretor.id')
-        .select('imovel.*', 'categoria.id as categoriaId', 'categoria.tipo', 'corretor.id as corretorId', 'corretor.nome')
+        const imoveis = await knex('imoveis')
+        .leftJoin('categorias', 'imoveis.id_categoria','=','categorias.id')
+        .leftJoin('corretores','imoveis.id_corretor','=','corretores.id')
+        .join('imagens','imagens.id','=','imoveis.id')
+        .select('imoveis.*', 'categorias.id as categoriaId', 'categorias.descricao', 'corretores.id as corretorId', 'corretores.nome','imagens.*')
         const serializedImovel = imoveis.map(imovel => {
             return{
-                ...imovel,
-                image: imovel.image.split(',')
+                ...imovel
             }
         })
-        return res.json(serializedImovel)
+        return res.json(imoveis)
     }
 
-    async create(req: any, res: Response){
-        const files = req.files.map(function(file){
-            return file.filename
-        })
+    async create(req: Request, res: Response){
+        const files = req.files as Express.Multer.File[]
+
         try {
             const {
                 descricao,
@@ -82,11 +81,12 @@ class ImoveisController{
                 id_corretor
             } = req.body
 
-            await knex('imovel').insert({ 
+            const trs = await knex.transaction()
+
+            const idImovel =  await trs('imoveis').insert({ 
                 descricao,
                 endereco,
                 detalhes,
-                image: JSON.stringify(files).replace(/[\[\]\\"]/g,''),
                 latitude,
                 longitude,
                 cidade,
@@ -95,6 +95,18 @@ class ImoveisController{
                 id_categoria,
                 id_corretor
             })
+
+            const images = files.map(img => {
+                return{
+                    path: img.filename,
+                    id_imovel: idImovel[0],
+                    id_corretor: null
+                }
+            })
+            await trs('imagens').insert(images)
+
+            await trs.commit()
+
             res.status(201).send()
 
         } catch (error) {
@@ -137,7 +149,7 @@ class ImoveisController{
                 formatedImages = files
             }
 
-            await knex('imovel').update({ 
+            await knex('imoveis').update({ 
                 descricao,
                 endereco,
                 detalhes,
@@ -165,7 +177,7 @@ class ImoveisController{
         try {
             const { id } = req.params
 
-            await knex('imovel')
+            await knex('imoveis')
                 .where({ id })
                 .del()
             return res.status(204).send()

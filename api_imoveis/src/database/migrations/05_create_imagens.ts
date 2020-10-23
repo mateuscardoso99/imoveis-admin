@@ -6,7 +6,7 @@ export async function up(knex: Knex){
         table.string('path').notNullable()
 
         table.integer('id_imovel')
-        	.notNullable()
+        	.nullable()
         	.unsigned()
         	.references('id')
         	.inTable('imoveis')
@@ -14,7 +14,7 @@ export async function up(knex: Knex){
             .onUpdate('cascade')
 
         table.integer('id_corretor')
-        	.notNullable()
+        	.nullable()
         	.unsigned()
         	.references('id')
         	.inTable('corretores')

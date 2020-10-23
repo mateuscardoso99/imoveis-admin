@@ -14,7 +14,7 @@ import { imovelCreate } from '../../../actions/ImovelActions'
 
 interface Categoria{
     id: number
-    tipo: string
+    descricao: string
 }
 
 const CreateImovel = () => {
@@ -219,7 +219,7 @@ const CreateImovel = () => {
                     <select id="select_categoria" name="select_categoria" value={selectedCategoria} className="form-control" onChange={categoriaSelecionado}>
                         <option value="0">Selecione</option>
                         {categoria.map(cat => (
-                            <option key={cat.id} value={cat.id}>{cat.tipo}</option>
+                            <option key={cat.id} value={cat.id}>{cat.descricao}</option>
                         ))}
                     </select>
                 </div>

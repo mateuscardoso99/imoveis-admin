@@ -15,7 +15,7 @@ import {apiGet} from '../../../services/api'
 
 interface Categoria{
     id: number
-    tipo: string
+    descricao: string
 }
 
 const UpdateImovel = () => {
@@ -236,7 +236,7 @@ const UpdateImovel = () => {
                     <label htmlFor="select_categoria">Categoria</label>
                     <select id="select_categoria" name="select_categoria" value={selectedCategoria} className="form-control" onChange={categoriaSelecionado}>
                         {categoria.map(cat => (
-                            <option key={cat.id} value={cat.id}>{cat.tipo}</option>
+                            <option key={cat.id} value={cat.id}>{cat.descricao}</option>
                         ))}
                     </select>
                 </div>

@@ -4,14 +4,14 @@ import knex from '../database/connection'
 class CategoriaController{
 
     async index(req: Request, res: Response){
-        const cats = await knex('categoria').select('*')
+        const cats = await knex('categorias').select('*')
         return res.json(cats)
     }
 
     async create(req: Request, res: Response){
         try {
             const { tipo } = req.body
-            await knex('categoria').insert({ tipo })
+            await knex('categorias').insert({ tipo })
             res.status(201).send()
 
         } catch (error) {
@@ -24,7 +24,7 @@ class CategoriaController{
             const { tipo } = req.body
             const { id } = req.params
 
-            await knex('categoria').update({ tipo }).where({ id })
+            await knex('categorias').update({ tipo }).where({ id })
 
             return res.send()
 
@@ -36,13 +36,13 @@ class CategoriaController{
     async delete(req: Request, res: Response){
         try {
             const { id } = req.params
-            const cat = await knex('categoria').where('id', id).first()
+            const cat = await knex('categorias').where('id', id).first()
             
             if(!cat){
                 return res.status(400).json({ message:'categoria não existe.'})
             }
             else{
-                await knex('categoria')
+                await knex('categorias')
                     .where({ id })
                     .del()
 

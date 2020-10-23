@@ -5,15 +5,15 @@ class AgendamentoController{
 
     async show(req: Request, res: Response){
         const id = req.params
-        const agendamento = await knex('agendamento').where(id)
+        const agendamento = await knex('agendamentos').where(id)
         return res.json(agendamento)
     }
 
     async index(req: Request, res: Response){
-        const agendamentos = await knex('agendamento')
-        .join('corretor', 'corretor.id', '=', 'agendamento.id_corretor')
-        .join('imovel', 'imovel.id', '=', 'agendamento.id_imovel')
-        .select('agendamento.*','corretor.nome as nomeCorretor')
+        const agendamentos = await knex('agendamentos')
+        .join('corretores', 'corretores.id', '=', 'agendamentos.id_corretor')
+        .join('imoveis', 'imoveis.id', '=', 'agendamentos.id_imovel')
+        .select('agendamentos.*','corretor.nome as nomeCorretor')
         return res.json(agendamentos)
     }
 
@@ -25,7 +25,7 @@ class AgendamentoController{
                 id_corretor
             } = req.body
 
-            await knex('agendamento').insert({ 
+            await knex('agendamentos').insert({ 
                 mensagem,
                 id_imovel,
                 id_corretor
@@ -42,7 +42,7 @@ class AgendamentoController{
             const { situacao } = req.body
             const { id } = req.params
 
-            await knex('agendamento')
+            await knex('agendamentos')
             .update({ 
                 situacao
             })
@@ -57,11 +57,11 @@ class AgendamentoController{
     async delete(req: Request, res: Response){
         try {
             const { id } = req.params
-            const corretor = await knex('agendamento').where('id', id).first()
+            const corretor = await knex('agendamentos').where('id', id).first()
             
             if(!corretor) return res.status(400).json({ message:'agendamento não existe.'})
             
-            await knex('agendamento')
+            await knex('agendamentos')
                 .where({ id })
                 .del()
             return res.send()
