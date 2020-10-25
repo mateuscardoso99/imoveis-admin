@@ -35,16 +35,19 @@ class ImoveisController{
     }*/
     async show(req: Request, res: Response){
         const {id} = req.params
-        const imovel = await knex('imovel')
-        .join('categorias', 'imoveis.id_categoria','=','categorias.id')
-        .join('corretores','imoveis.id_corretor','=','corretores.id')
-        .select('imoveis.*', 'categorias.id as categoriaId', 'categorias.tipo', 'corretores.id as corretorId', 'corretores.nome')
+        const imovel = await knex('imoveis')
+        .leftJoin('categorias', 'imoveis.id_categoria','=','categorias.id')
+        .leftJoin('corretores','imoveis.id_corretor','=','corretores.id')
+        .join('imagens','imagens.id_imovel','=','imoveis.id')
+        .select('imoveis.*', 'categorias.descricao as categoria', 'corretores.nome as corretor',
+            knex.raw(`group_concat(imagens.path) as imagens`)).groupBy('imoveis.id')
         .where('imoveis.id', String(id))
 
         const serializedImovel = imovel.map(imovel => {
             return{
                 ...imovel,
-                image: imovel.image.split(',')
+                imagens: imovel.imagens.split(',')
+                .map(img =>`http://localhost:3333/uploads/imoveis/${img}`)
             }
         })
         return res.json(serializedImovel)
@@ -54,14 +57,17 @@ class ImoveisController{
         const imoveis = await knex('imoveis')
         .leftJoin('categorias', 'imoveis.id_categoria','=','categorias.id')
         .leftJoin('corretores','imoveis.id_corretor','=','corretores.id')
-        .join('imagens','imagens.id','=','imoveis.id')
-        .select('imoveis.*', 'categorias.id as categoriaId', 'categorias.descricao', 'corretores.id as corretorId', 'corretores.nome','imagens.*')
-        const serializedImovel = imoveis.map(imovel => {
+        .join('imagens','imagens.id_imovel','=','imoveis.id')
+        .select('imoveis.*', 'categorias.descricao as categoria', 'corretores.nome as corretor',
+            knex.raw(`group_concat(imagens.path) as imagens`)).groupBy('imoveis.id')
+        const serializedImoveis = imoveis.map(imovel => {
             return{
-                ...imovel
+                ...imovel,
+                imagens: imovel.imagens.split(',')
+                .map(img => `http://localhost:3333/uploads/imoveis/${img}`)
             }
         })
-        return res.json(imoveis)
+        return res.json(serializedImoveis)
     }
 
     async create(req: Request, res: Response){

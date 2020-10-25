@@ -40,7 +40,7 @@ export interface Imovel {
     descricao: string
     endereco: string
     detalhes: string
-    image: []
+    imagens: []
     latitude: number
     longitude: number
     cidade: string

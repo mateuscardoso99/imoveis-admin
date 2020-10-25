@@ -124,10 +124,10 @@ const UpdateImovel = () => {
             dados.append('id_categoria', categoria)
             dados.append('id_corretor', corretor)
 
-            if(imovel.image){
-                for (let i = 0; i < imovel.image.length; i++) {
-                    dados.append('images', imovel.image[i])
-                    console.log('ddd',imovel.image[i])
+            if(imovel.imagens){
+                for (let i = 0; i < imovel.imagens.length; i++) {
+                    dados.append('images', imovel.imagens[i])
+                    console.log('ddd',imovel.imagens[i])
                 } 
             }
             if(file){

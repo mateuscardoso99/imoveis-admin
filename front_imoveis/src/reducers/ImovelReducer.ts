@@ -8,7 +8,7 @@ const initialState: ImoveisState = {
         descricao: '',
         endereco: '',
         detalhes: '',
-        image: [],
+        imagens: [],
         latitude: Number(''),
         longitude: Number(''),
         cidade: '',
