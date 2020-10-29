@@ -32,7 +32,7 @@ export interface Corretor{
     id: number,
     nome: string,
     email: string
-    image: string,
+    imagem: string,
 }
 
 export interface Imovel {

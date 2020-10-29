@@ -104,15 +104,15 @@ const UpdateImovel = () => {
 
     async function updateImovel(event: FormEvent){
         event.preventDefault()
-
-        const { descricao, valor, endereco, detalhes } = formData
-        const [latitude, longitude] = imovelPosition
-        const uf = "RS"
-        const cidade = "Santa Maria"
-        const categoria = selectedCategoria
-        const corretor = selectedCorretor
-        
-        const dados = new FormData()
+        try{
+            const { descricao, valor, endereco, detalhes } = formData
+            const [latitude, longitude] = imovelPosition
+            const uf = "RS"
+            const cidade = "Santa Maria"
+            const categoria = selectedCategoria
+            const corretor = selectedCorretor
+            
+            const dados = new FormData()
             dados.append('descricao', descricao)
             dados.append('endereco', endereco)
             dados.append('detalhes', detalhes)
@@ -124,19 +124,12 @@ const UpdateImovel = () => {
             dados.append('id_categoria', categoria)
             dados.append('id_corretor', corretor)
 
-            if(imovel.imagens){
-                for (let i = 0; i < imovel.imagens.length; i++) {
-                    dados.append('images', imovel.imagens[i])
-                    console.log('ddd',imovel.imagens[i])
-                } 
-            }
             if(file){
                 for (let i = 0; i < file.length; i++) {
                     dados.append('imageImovel', file[i])
                 }  
             }
-
-        try{
+        
             const resp = await dispatch(imovelUpdate(id, dados))
             if(resp.payload.status === 204){
                 voltar()
@@ -227,6 +220,7 @@ const UpdateImovel = () => {
                 <div className="form-group col-12">
                     <label htmlFor="select_corretor">Corretor responsável</label>
                     <select id="select_corretor" name="select_corretor" value={selectedCorretor} className="form-control" onChange={corretorSelecionado}>
+                        <option value="0">Nenhum</option>
                         {corretores.map(c => (
                             <option key={c.id} value={c.id}>{c.nome}</option>
                         ))}
@@ -235,6 +229,7 @@ const UpdateImovel = () => {
                 <div className="form-group col-12">
                     <label htmlFor="select_categoria">Categoria</label>
                     <select id="select_categoria" name="select_categoria" value={selectedCategoria} className="form-control" onChange={categoriaSelecionado}>
+                        <option value="0">Nenhum</option>
                         {categoria.map(cat => (
                             <option key={cat.id} value={cat.id}>{cat.descricao}</option>
                         ))}

@@ -42,7 +42,7 @@ const Corretores = () => {
                 {corretores.map(corretor => (
                 <li key={corretor.id} className="list-group-item">
                     <div className="card mt-5 ml-auto mr-auto mb-5" style={{width: "70%"}}>
-                        <img src={`http://localhost:3333/uploads/corretores/${corretor.image}`} className="card-img-top" alt="..."/>
+                        <img src={corretor.imagem ? corretor.imagem : ''} className="card-img-top" alt="..."/>
                         <div className="card-body">
                             <h5 className="card-title">{corretor.nome}</h5>
                             <p className="card-text">{corretor.email}</p>

@@ -7,7 +7,7 @@ const initialState: CorretoresState = {
         id: Number(''),
         nome: '',
         email: '',
-        image: ''
+        imagem: ''
     }
 }
 

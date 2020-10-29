@@ -88,14 +88,15 @@ const CreateImovel = () => {
     async function cadastrarImovel(event: FormEvent){
         event.preventDefault()
 
-        const { descricao, valor, endereco, detalhes } = formData
-        const [latitude, longitude] = selectedPosition
-        const uf = "RS"
-        const cidade = "Santa Maria"
-        const categoria = selectedCategoria
-        const corretor = selectedCorretor
-  
-        const dados = new FormData()
+        try{
+            const { descricao, valor, endereco, detalhes } = formData
+            const [latitude, longitude] = selectedPosition
+            const uf = "RS"
+            const cidade = "Santa Maria"
+            const categoria = selectedCategoria
+            const corretor = selectedCorretor
+      
+            const dados = new FormData()
             dados.append('descricao', descricao)
             dados.append('endereco', endereco)
             dados.append('detalhes', detalhes)
@@ -115,8 +116,7 @@ const CreateImovel = () => {
                 }  
             }
 
-        try{
-        const resp = await dispatch(imovelCreate(dados))
+            const resp = await dispatch(imovelCreate(dados))
             if(resp.payload.status === 201){
                 voltar()
             }
@@ -208,7 +208,7 @@ const CreateImovel = () => {
                 <div className="form-group col-12">
                     <label htmlFor="select_corretor">Corretor responsável</label>
                     <select id="select_corretor" name="select_corretor" value={selectedCorretor} className="form-control" onChange={corretorSelecionado}>
-                        <option value="0">Selecione</option>
+                        <option value="0">Nenhum</option>
                         {corretores.map(c => (
                             <option key={c.id} value={c.id}>{c.nome}</option>
                         ))}
@@ -217,7 +217,7 @@ const CreateImovel = () => {
                 <div className="form-group col-12">
                     <label htmlFor="select_corretor">Categoria</label>
                     <select id="select_categoria" name="select_categoria" value={selectedCategoria} className="form-control" onChange={categoriaSelecionado}>
-                        <option value="0">Selecione</option>
+                        <option value="0">Nenhum</option>
                         {categoria.map(cat => (
                             <option key={cat.id} value={cat.id}>{cat.descricao}</option>
                         ))}

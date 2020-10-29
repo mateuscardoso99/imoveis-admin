@@ -38,7 +38,7 @@ class ImoveisController{
         const imovel = await knex('imoveis')
         .leftJoin('categorias', 'imoveis.id_categoria','=','categorias.id')
         .leftJoin('corretores','imoveis.id_corretor','=','corretores.id')
-        .join('imagens','imagens.id_imovel','=','imoveis.id')
+        .leftJoin('imagens','imagens.id_imovel','=','imoveis.id')
         .select('imoveis.*', 'categorias.descricao as categoria', 'corretores.nome as corretor',
             knex.raw(`group_concat(imagens.path) as imagens`)).groupBy('imoveis.id')
         .where('imoveis.id', String(id))
@@ -46,7 +46,7 @@ class ImoveisController{
         const serializedImovel = imovel.map(imovel => {
             return{
                 ...imovel,
-                imagens: imovel.imagens.split(',')
+                imagens: imovel.imagens?.split(',')
                 .map(img =>`http://localhost:3333/uploads/imoveis/${img}`)
             }
         })
@@ -57,13 +57,13 @@ class ImoveisController{
         const imoveis = await knex('imoveis')
         .leftJoin('categorias', 'imoveis.id_categoria','=','categorias.id')
         .leftJoin('corretores','imoveis.id_corretor','=','corretores.id')
-        .join('imagens','imagens.id_imovel','=','imoveis.id')
+        .leftJoin('imagens','imagens.id_imovel','=','imoveis.id')
         .select('imoveis.*', 'categorias.descricao as categoria', 'corretores.nome as corretor',
             knex.raw(`group_concat(imagens.path) as imagens`)).groupBy('imoveis.id')
         const serializedImoveis = imoveis.map(imovel => {
             return{
                 ...imovel,
-                imagens: imovel.imagens.split(',')
+                imagens: imovel.imagens?.split(',')
                 .map(img => `http://localhost:3333/uploads/imoveis/${img}`)
             }
         })
@@ -98,8 +98,8 @@ class ImoveisController{
                 cidade,
                 uf,
                 valor,
-                id_categoria,
-                id_corretor
+                id_categoria: id_categoria === '0' ? null : id_categoria,
+                id_corretor: id_corretor === '0' ? null : id_corretor
             })
 
             const images = files.map(img => {
@@ -120,20 +120,15 @@ class ImoveisController{
         }
     }
 
-    async update(req: any, res: Response){
+    async update(req: Request, res: Response){
         const {id} = req.params
-        const files = req.files.map(function(file){
-             return file.filename
-        })
-
-        let formatedImages = ''
+        const files = req.files as Express.Multer.File[]
 
         try {
             const {
                 descricao,
                 endereco,
                 detalhes,
-                images,
                 latitude,
                 longitude,
                 cidade,
@@ -142,36 +137,35 @@ class ImoveisController{
                 id_categoria,
                 id_corretor
             } = req.body
-        
-            if(images.length > 0){
-                if(files.length > 0){
-                    formatedImages = images.concat(files)
-                }
-                else{
-                    formatedImages = images
-                }
-            }
-            else{
-                formatedImages = files
-            }
 
-            await knex('imoveis').update({ 
+            const trs = await knex.transaction()
+
+            await trs('imoveis').update({ 
                 descricao,
                 endereco,
                 detalhes,
-                image: JSON.stringify(formatedImages).replace(/[\[\]\\"]/g,''),
                 latitude,
                 longitude,
                 cidade,
                 uf,
                 valor,
-                id_categoria,
-                id_corretor
+                id_categoria: id_categoria === '0' ? null : id_categoria,
+                id_corretor: id_corretor === '0' ? null : id_corretor
              }).where({ id })
 
-            console.log('files',files)
-            console.log('images',images)
-            console.log('formated',formatedImages)
+            if(files){
+                const images = files.map(img => {
+                    return{
+                        path: img.filename,
+                        id_imovel: id,
+                        id_corretor: null
+                    }
+                })
+                await trs('imagens').insert(images)
+            }
+
+            await trs.commit()
+
             res.status(204).send()
 
         } catch (error) {
