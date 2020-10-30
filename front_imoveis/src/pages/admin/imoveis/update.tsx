@@ -27,12 +27,33 @@ const UpdateImovel = () => {
     const {corretores} = useSelector((state: AplicationState)=>state.corretores)
     const dispatch = useDispatch()
 
+    const [imovelPosition, setImovelPosition] = useState<[number,number]>([0,0])
+    
+    const [selectedCorretor, setSelectedCorretor] = useState('0')
+
+    const [categoria, setCategoria] = useState<Categoria[]>([])
+    const [selectedCategoria, setSelectedCategoria] = useState('0')
+    
+    const [file,setFile] = useState<FileList>()
+
+    const [formData, setFormData] = useState({
+        descricao: imovel.descricao,
+        valor: '',
+        endereco: '',
+        detalhes: '',
+    })
+
     useEffect(()=>{
         const getImovel = async () =>{
             const resp = await dispatch(imovelGetSingle(id))
             setImovelPosition([resp.payload.data[0].latitude,resp.payload.data[0].longitude])
-            setSelectedCategoria(resp.payload.data[0].id_categoria)
-            setSelectedCorretor(resp.payload.data[0].id_corretor)
+            
+            setSelectedCategoria(resp.payload.data[0].id_categoria === null ? '0' : resp.payload.data[0].id_categoria)
+            
+
+            setSelectedCorretor(resp.payload.data[0].id_corretor === null ? '0' : resp.payload.data[0].id_corretor)
+
+
             setFormData({
                 descricao: resp.payload.data[0].descricao,
                 detalhes: resp.payload.data[0].detalhes,
@@ -51,21 +72,6 @@ const UpdateImovel = () => {
         })
     }, [])
 
-    const [imovelPosition, setImovelPosition] = useState<[number,number]>([0,0])
-    
-    const [selectedCorretor, setSelectedCorretor] = useState('0')
-
-    const [categoria, setCategoria] = useState<Categoria[]>([])
-    const [selectedCategoria, setSelectedCategoria] = useState('0')
-    
-    const [file,setFile] = useState<FileList>()
-
-    const [formData, setFormData] = useState({
-        descricao: imovel.descricao,
-        valor: '',
-        endereco: '',
-        detalhes: '',
-    })
 
     const voltar = () => {
         history.push('/imoveis')

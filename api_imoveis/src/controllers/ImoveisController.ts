@@ -138,6 +138,7 @@ class ImoveisController{
                 id_corretor
             } = req.body
 
+
             const trs = await knex.transaction()
 
             await trs('imoveis').update({ 
@@ -169,7 +170,8 @@ class ImoveisController{
             res.status(204).send()
 
         } catch (error) {
-           res.send(error)
+        	console.log(error)
+        	res.send(error)
         }
     }
 
