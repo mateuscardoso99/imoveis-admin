@@ -2,7 +2,7 @@ import React, {useState,useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import Layout from '../../../components/admin/layout/layout'
 import LoaderButton from '../../../components/admin/loaderButton/loader'
-import Menu from '../../../components/admin/burger'
+import Menu from '../../../components/admin/layout/burger'
 import {apiGet, apiDelete, apiPut} from '../../../services/api'
 
 interface Agendamentos{

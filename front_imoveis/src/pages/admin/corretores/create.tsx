@@ -1,7 +1,7 @@
 import React, {useState, FormEvent, ChangeEvent} from 'react'
 import Layout from '../../../components/admin/layout/layout'
 import { useHistory } from 'react-router-dom'
-import Menu from '../../../components/admin/burger'
+import Menu from '../../../components/admin/layout/burger'
 import {useDispatch} from 'react-redux'
 import { corretorCreate } from '../../../actions/CorretorActions'
 

@@ -1,7 +1,7 @@
 import React, {useState,useEffect,FormEvent,ChangeEvent} from 'react'
 import {useHistory, useParams} from 'react-router-dom'
 import Layout from '../../../components/admin/layout/layout'
-import Menu from '../../../components/admin/burger'
+import Menu from '../../../components/admin/layout/burger'
 import {useDispatch,useSelector} from 'react-redux'
 import {AplicationState} from '../../../store'
 

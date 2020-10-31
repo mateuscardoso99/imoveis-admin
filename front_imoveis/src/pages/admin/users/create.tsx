@@ -2,7 +2,7 @@ import React,{useState,ChangeEvent,FormEvent} from 'react'
 import {useHistory} from 'react-router-dom'
 
 import Layout from '../../../components/admin/layout/layout'
-import Menu from '../../../components/admin/burger'
+import Menu from '../../../components/admin/layout/burger'
 import {useDispatch} from 'react-redux'
 import {userCreate} from '../../../actions/UserActions'
 

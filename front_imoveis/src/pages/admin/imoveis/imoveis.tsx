@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import Layout from '../../../components/admin/layout/layout'
-import Menu from '../../../components/admin/burger'
+import Menu from '../../../components/admin/layout/burger'
 import LoaderButton from '../../../components/admin/loaderButton/loader'
 
 import {useDispatch,useSelector} from 'react-redux'
@@ -37,7 +37,7 @@ const Imoveis = () => {
     }
 
     return(
-        <Menu>
+        <Menu title="ssss">
             {imoveis.length === 0 && (<LoaderButton/>)}
             <Link to="/imoveis/create" className="add btn btn-primary">+</Link>
             <h1 className="text-center bg-light text-dark">Imoveis Cadastrados</h1>

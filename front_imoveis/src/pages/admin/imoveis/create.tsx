@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom'
 
 import Layout from '../../../components/admin/layout/layout'
 import {apiGet} from '../../../services/api'
-import Menu from '../../../components/admin/burger'
+import Menu from '../../../components/admin/layout/burger'
 import {useDispatch,useSelector} from 'react-redux'
 import {AplicationState} from '../../../store'
 

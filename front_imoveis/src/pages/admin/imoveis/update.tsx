@@ -4,7 +4,7 @@ import { LeafletMouseEvent } from 'leaflet'
 import { useParams, useHistory } from 'react-router-dom'
 
 import Layout from '../../../components/admin/layout/layout'
-import Menu from '../../../components/admin/burger'
+import Menu from '../../../components/admin/layout/burger'
 import {useSelector,useDispatch} from 'react-redux'
 import {AplicationState} from '../../../store'
 
