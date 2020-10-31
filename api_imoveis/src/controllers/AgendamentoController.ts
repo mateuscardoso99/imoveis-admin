@@ -4,17 +4,25 @@ import knex from '../database/connection'
 class AgendamentoController{
 
     async show(req: Request, res: Response){
-        const id = req.params
-        const agendamento = await knex('agendamentos').where(id)
-        return res.json(agendamento)
+        try {
+            const id = req.params
+            const agendamento = await knex('agendamentos').where(id)
+            return res.json(agendamento)
+        }catch (error) {
+            res.status(500).send(error)
+        }
     }
 
     async index(req: Request, res: Response){
-        const agendamentos = await knex('agendamentos')
-        .join('corretores', 'corretores.id', '=', 'agendamentos.id_corretor')
-        .join('imoveis', 'imoveis.id', '=', 'agendamentos.id_imovel')
-        .select('agendamentos.*','corretor.nome as nomeCorretor')
-        return res.json(agendamentos)
+        try {
+            const agendamentos = await knex('agendamentos')
+            .join('corretores', 'corretores.id', '=', 'agendamentos.id_corretor')
+            .join('imoveis', 'imoveis.id', '=', 'agendamentos.id_imovel')
+            .select('agendamentos.*','corretor.nome as nomeCorretor')
+            return res.json(agendamentos)
+        }catch (error) {
+            res.status(500).send(error)
+        }
     }
 
     async create(req: Request, res: Response){
@@ -33,7 +41,7 @@ class AgendamentoController{
             res.status(201).send()
 
         } catch (error) {
-           res.send(error)
+            res.status(500).send(error)
         }
     }
 
@@ -50,7 +58,7 @@ class AgendamentoController{
 
             return res.send()
         } catch (error) {
-            res.send(error)
+            res.status(500).send(error)
         }
     }
 
@@ -66,7 +74,7 @@ class AgendamentoController{
                 .del()
             return res.send()
         } catch (error) {
-            res.send(error)
+            res.status(500).send(error)
         }
     }
 

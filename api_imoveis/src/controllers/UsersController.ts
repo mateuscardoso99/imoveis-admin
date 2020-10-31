@@ -6,14 +6,22 @@ import bcrypt from 'bcrypt'
 class UsersController{
 
     async show(req: Request, res: Response){
-        const {id} = req.params
-        const user = await knex('users').select('users.id','users.usuario').where({id})
-        return res.json(user)
+        try {
+            const {id} = req.params
+            const user = await knex('users').select('users.id','users.usuario').where({id})
+            return res.json(user)
+        } catch (error) {
+            res.status(500).send(error)
+        }
     }
 
     async index(req: Request, res: Response){
-        const users = await knex('users').select('users.id','users.usuario')
-        return res.json(users)
+        try {
+            const users = await knex('users').select('users.id','users.usuario')
+            return res.json(users)
+        } catch (error) {
+            res.status(500).send(error)
+        }
     }
 
     async create(req: Request, res: Response){
@@ -23,7 +31,7 @@ class UsersController{
             await knex('users').insert({ usuario: login, senha: hash })
             return res.status(201).send()
         } catch (error) {
-            res.send(error)
+            res.status(500).send(error)
         }
     }
 
@@ -37,7 +45,7 @@ class UsersController{
             return res.status(204).send()
 
         } catch (error) {
-            res.send(error)
+            res.status(500).send(error)
         }
     }
 
@@ -63,7 +71,7 @@ class UsersController{
             }
 
         } catch (error) {
-            res.send(error)
+            res.status(500).send(error)
         }
     }
 

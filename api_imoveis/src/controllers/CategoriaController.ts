@@ -4,8 +4,12 @@ import knex from '../database/connection'
 class CategoriaController{
 
     async index(req: Request, res: Response){
-        const cats = await knex('categorias').select('*')
-        return res.json(cats)
+        try {
+            const cats = await knex('categorias').select('*')
+            return res.json(cats)
+        } catch (error) {
+            res.status(500).send(error)
+        }
     }
 
     async create(req: Request, res: Response){
@@ -15,7 +19,7 @@ class CategoriaController{
             res.status(201).send()
 
         } catch (error) {
-           res.send(error)
+            res.status(500).send(error)
         }
     }
 
@@ -29,7 +33,7 @@ class CategoriaController{
             return res.send()
 
         } catch (error) {
-            res.send(error)
+            res.status(500).send(error)
         }
     }
 
@@ -50,7 +54,7 @@ class CategoriaController{
             }
 
         } catch (error) {
-            res.send(error)
+            res.status(500).send(error)
         }
     }
 

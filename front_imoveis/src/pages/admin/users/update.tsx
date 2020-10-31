@@ -57,16 +57,16 @@ const UserUpdate = () => {
         <Menu>
             <button className="back btn btn-primary" onClick={voltar}>←</button>
             <div className="container">
-            <form onSubmit={UpdateUsuario} className="mt-5 justify-content-center">
-                <div className="form-group col-10">
+            <form onSubmit={UpdateUsuario}>
+                <div className="input-field">
                     <label htmlFor="username">Nome</label>
                     <input type="text" className="form-control" id="login" name="login" value={formData.login} onChange={handleInputChange}/>
                 </div>
-                <div className="form-group col-10">
+                <div className="input-field">
                     <label htmlFor="userpassword">Nova senha</label>
                     <input type="password" className="form-control" id="password" name="password" value={formData.password} onChange={handleInputChange}/>
                 </div>
-                <div className="form-row col-10 justify-content-center">
+                <div>
                     <button type="submit" className="btn btn-primary">Atualizar</button>
                 </div>
             </form>

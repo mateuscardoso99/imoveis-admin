@@ -69,20 +69,20 @@ const CreateCorretor = () => {
         <Menu>
             <button className="back btn btn-primary" onClick={voltar}>←</button>
             <h1 className="text-center mb-3 bg-light text-dark">Novo corretor</h1>
-            <form onSubmit={cadastrarCorretor} className="container justify-content-center">
-                <div className="form-group col-10">
+            <form onSubmit={cadastrarCorretor}>
+                <div>
                     <label htmlFor="imageImovel">Selecione uma foto:</label>
                     <input type="file" className="file ml-3" id="imageCorretor" name="imageCorretor" onChange={handleInputFileChange}/>
                 </div>
-                <div className="form-group col-10">
+                <div className="input-field">
                     <label htmlFor="nome">Nome</label>
-                    <input type="text" className="form-control" id="nome" name="nome" onChange={handleInputChange}/>
+                    <input type="text" id="nome" name="nome" onChange={handleInputChange}/>
                 </div>
-                <div className="form-group col-10">
-                        <label htmlFor="email">Email</label>
-                        <input type="email" className="form-control" id="email" name="email" onChange={handleInputChange}/>
+                <div className="input-field">
+                    <label htmlFor="email">Email</label>
+                    <input type="email" id="email" name="email" onChange={handleInputChange}/>
                 </div>
-                <div className="form-row col-md-10 justify-content-center">
+                <div>
                     <button type="submit" className="btn btn-primary">Cadastrar</button>
                 </div>
             </form>

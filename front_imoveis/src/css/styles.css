@@ -47,16 +47,40 @@ text-decoration: none;
   background-color: #2d3451 !important;
 }
 
-.conteudo form {
-  margin: auto;
-  padding: 60px;
-  background: #B5DBCE;
-  border-radius: 25px;
+
+.conteudo{
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
+.conteudo form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #d6d6d6;
+  box-shadow: 1px 5px 11px 5px #d6d6d6;
+}
+.conteudo .input-field{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.conteudo .input-field input{
+  width: 100%;
+  border: 1px solid #d6d6d6;
+  height: 2rem;
+  border-radius: 5px;
+}
 .conteudo .leaflet-container{
   width: 100% !important;
   height: 350px;

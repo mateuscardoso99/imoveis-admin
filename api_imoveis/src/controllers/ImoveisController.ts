@@ -34,46 +34,53 @@ class ImoveisController{
         return res.json(serializedImovel)
     }*/
     async show(req: Request, res: Response){
-        const {id} = req.params
-        const imovel = await knex('imoveis')
-        .leftJoin('categorias', 'imoveis.id_categoria','=','categorias.id')
-        .leftJoin('corretores','imoveis.id_corretor','=','corretores.id')
-        .leftJoin('imagens','imagens.id_imovel','=','imoveis.id')
-        .select('imoveis.*', 'categorias.descricao as categoria', 'corretores.nome as corretor',
-            knex.raw(`group_concat(imagens.path) as imagens`)).groupBy('imoveis.id')
-        .where('imoveis.id', String(id))
+        try{
+            const {id} = req.params
+            const imovel = await knex('imoveis')
+            .leftJoin('categorias', 'imoveis.id_categoria','=','categorias.id')
+            .leftJoin('corretores','imoveis.id_corretor','=','corretores.id')
+            .leftJoin('imagens','imagens.id_imovel','=','imoveis.id')
+            .select('imoveis.*', 'categorias.descricao as categoria', 'corretores.nome as corretor',
+                knex.raw(`group_concat(imagens.path) as imagens`)).groupBy('imoveis.id')
+            .where('imoveis.id', String(id))
 
-        const serializedImovel = imovel.map(imovel => {
-            return{
-                ...imovel,
-                imagens: imovel.imagens?.split(',')
-                .map(img =>`http://localhost:3333/uploads/imoveis/${img}`)
-            }
-        })
-        return res.json(serializedImovel)
+            const serializedImovel = imovel.map(imovel => {
+                return{
+                    ...imovel,
+                    imagens: imovel.imagens?.split(',')
+                    .map(img =>`http://localhost:3333/uploads/imoveis/${img}`)
+                }
+            })
+            return res.json(serializedImovel)
+        }catch(error){
+            return res.status(500).send()
+        }
     }
 
     async index(req: Request, res: Response){
-        const imoveis = await knex('imoveis')
-        .leftJoin('categorias', 'imoveis.id_categoria','=','categorias.id')
-        .leftJoin('corretores','imoveis.id_corretor','=','corretores.id')
-        .leftJoin('imagens','imagens.id_imovel','=','imoveis.id')
-        .select('imoveis.*', 'categorias.descricao as categoria', 'corretores.nome as corretor',
-            knex.raw(`group_concat(imagens.path) as imagens`)).groupBy('imoveis.id')
-        const serializedImoveis = imoveis.map(imovel => {
-            return{
-                ...imovel,
-                imagens: imovel.imagens?.split(',')
-                .map(img => `http://localhost:3333/uploads/imoveis/${img}`)
-            }
-        })
-        return res.json(serializedImoveis)
+        try{
+            const imoveis = await knex('imoveis')
+            .leftJoin('categorias', 'imoveis.id_categoria','=','categorias.id')
+            .leftJoin('corretores','imoveis.id_corretor','=','corretores.id')
+            .leftJoin('imagens','imagens.id_imovel','=','imoveis.id')
+            .select('imoveis.*', 'categorias.descricao as categoria', 'corretores.nome as corretor',
+                knex.raw(`group_concat(imagens.path) as imagens`)).groupBy('imoveis.id')
+            const serializedImoveis = imoveis.map(imovel => {
+                return{
+                    ...imovel,
+                    imagens: imovel.imagens?.split(',')
+                    .map(img => `http://localhost:3333/uploads/imoveis/${img}`)
+                }
+            })
+            return res.json(serializedImoveis)
+        }catch(error){
+            return res.status(500).send()
+        }
     }
 
     async create(req: Request, res: Response){
-        const files = req.files as Express.Multer.File[]
-
         try {
+            const files = req.files as Express.Multer.File[]
             const {
                 descricao,
                 endereco,
@@ -116,15 +123,14 @@ class ImoveisController{
             res.status(201).send()
 
         } catch (error) {
-           res.send(error)
+            res.status(500).send(error)
         }
     }
 
     async update(req: Request, res: Response){
-        const {id} = req.params
-        const files = req.files as Express.Multer.File[]
-
         try {
+            const {id} = req.params
+            const files = req.files as Express.Multer.File[]
             const {
                 descricao,
                 endereco,
@@ -170,8 +176,7 @@ class ImoveisController{
             res.status(204).send()
 
         } catch (error) {
-        	console.log(error)
-        	res.send(error)
+            res.status(500).send(error)
         }
     }
 

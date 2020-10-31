@@ -137,14 +137,14 @@ const CreateImovel = () => {
         <Menu>
             <button className="back btn btn-primary" onClick={voltar}>←</button>
             <h1 className="text-center mb-3 bg-light text-dark">Novo imóvel</h1>
-            <form onSubmit={cadastrarImovel} className="container justify-content-center" encType="multipart/form-data">
-                    <div className="form-group col-12">
+            <form onSubmit={cadastrarImovel} encType="multipart/form-data">
+                    <div className="input-field">
                         <label htmlFor="inputEmail4">Descricao</label>
-                        <input type="text" className="form-control" id="descricao" name="descricao" onChange={handleInputChange}/>
+                        <input type="text" id="descricao" name="descricao" onChange={handleInputChange}/>
                     </div>
-                    <div className="form-group col-8">
+                    <div className="input-field">
                         <label htmlFor="inputPassword4">Valor R$</label>
-                        <input type="number" step="0.01" className="form-control" id="valor" name="valor" onChange={handleInputChange}/>
+                        <input type="number" step="0.01" id="valor" name="valor" onChange={handleInputChange}/>
                     </div>
 
                 <div className="form-row">
@@ -162,14 +162,14 @@ const CreateImovel = () => {
                     <Marker position={selectedPosition}/>
                 </Map>
 
-                <div className="form-group col-12">
+                <div className="input-field">
                     <label htmlFor="endereco">Endereço</label>
-                    <input type="text" className="form-control" id="endereco" name="endereco" onChange={handleInputChange}/>
+                    <input type="text" id="endereco" name="endereco" onChange={handleInputChange}/>
                 </div>
  
-                <div className="form-group col-12">
+                <div className="input-field">
                     <label htmlFor="select_estado">Estado</label>
-                    <select id="select_estado" value="RS" className="form-control">
+                    <select id="select_estado" value="RS">
                     <option value="AC">Acre</option>
                     <option value="AL">Alagoas</option>
                     <option value="AP">Amapá</option>
@@ -199,35 +199,35 @@ const CreateImovel = () => {
                     <option value="TO">Tocantins</option>
                     </select>
                 </div>
-                <div className="form-group col-12">
+                <div className="input-field">
                     <label htmlFor="select_cidade">Cidade</label>
-                    <select id="select_cidade" value="Santa Maria" className="form-control">
+                    <select id="select_cidade" value="Santa Maria">
                         <option value="0" selected>Santa Maria</option>
                     </select>
                 </div>
-                <div className="form-group col-12">
+                <div className="input-field">
                     <label htmlFor="select_corretor">Corretor responsável</label>
-                    <select id="select_corretor" name="select_corretor" value={selectedCorretor} className="form-control" onChange={corretorSelecionado}>
+                    <select id="select_corretor" name="select_corretor" value={selectedCorretor} onChange={corretorSelecionado}>
                         <option value="0">Nenhum</option>
                         {corretores.map(c => (
                             <option key={c.id} value={c.id}>{c.nome}</option>
                         ))}
                     </select>
                 </div>
-                <div className="form-group col-12">
+                <div className="input-field">
                     <label htmlFor="select_corretor">Categoria</label>
-                    <select id="select_categoria" name="select_categoria" value={selectedCategoria} className="form-control" onChange={categoriaSelecionado}>
+                    <select id="select_categoria" name="select_categoria" value={selectedCategoria} onChange={categoriaSelecionado}>
                         <option value="0">Nenhum</option>
                         {categoria.map(cat => (
                             <option key={cat.id} value={cat.id}>{cat.descricao}</option>
                         ))}
                     </select>
                 </div>
-                <div className="form-group col-12">
+                <div className="input-field">
                     <label htmlFor="detalhes">Detalhes</label>
-                    <textarea className="form-control" rows={5} id="detalhes" name="detalhes" onChange={handleTextAreaChange}></textarea>
+                    <textarea rows={5} id="detalhes" name="detalhes" onChange={handleTextAreaChange}></textarea>
                 </div>
-                <div className="form-row col-md-12 justify-content-center">
+                <div>
                     <button type="submit" className="btn btn-primary ml-5 mr-5">Cadastrar</button>
                 </div>
             </form>

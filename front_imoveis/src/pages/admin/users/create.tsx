@@ -45,16 +45,16 @@ const CreateUser = () => {
         <Menu>
             <button className="back btn btn-primary" onClick={voltar}>←</button>
             <h1 className="text-center mb-3 bg-light text-dark">Novo usuário</h1>
-            <form onSubmit={cadastrarUsuario} className="container justify-content-center">
-                    <div className="form-group col-10">
-                        <label htmlFor="username">Nome</label>
-                        <input type="text" className="form-control" id="login" name="login" onChange={handleInputChange}/>
-                    </div>
-                    <div className="form-group col-10">
-                        <label htmlFor="userpassword">Senha</label>
-                        <input type="password" className="form-control" id="password" name="password" onChange={handleInputChange}/>
-                    </div>
-                <div className="form-row col-10 justify-content-center">
+            <form onSubmit={cadastrarUsuario}>
+                <div className="input-field">
+                    <label htmlFor="username">Nome</label>
+                    <input type="text" className="form-control" id="login" name="login" onChange={handleInputChange}/>
+                </div>
+                <div className="input-field">
+                    <label htmlFor="userpassword">Senha</label>
+                    <input type="password" className="form-control" id="password" name="password" onChange={handleInputChange}/>
+                </div>
+                <div>
                     <button type="submit" className="btn btn-primary">Criar Usuário</button>
                 </div>
             </form>

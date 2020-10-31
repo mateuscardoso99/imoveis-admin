@@ -56,16 +56,16 @@ const UpdateCorretor = () => {
     return(
         <Menu>
             <button className="back btn btn-primary" onClick={voltar}>←</button>
-            <form onSubmit={atualizarCorretor} className="container justify-content-center">
-                <div className="form-group col-10">
+            <form onSubmit={atualizarCorretor}>
+                <div>
                     <label htmlFor="nome">Nome</label>
                     <input type="text" className="form-control" id="nome" name="nome" value={formData.nome} onChange={handleInputChange}/>
                 </div>
-                <div className="form-group col-10">
+                <div className="input-field">
                     <label htmlFor="email">Email</label>
                     <input type="email" className="form-control" id="email" name="email" value={formData.email} onChange={handleInputChange}/>
                 </div>
-                <div className="form-row col-10 justify-content-center">
+                <div className="input-field">
                     <button type="submit" className="btn btn-primary">Atualizar</button>
                 </div>
             </form>

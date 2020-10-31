@@ -4,33 +4,41 @@ import knex from '../database/connection'
 class CorretoresController{
 
 	async show(req: Request, res: Response){
-		const {id} = req.params
-        const corretor = await knex('corretores')
-        .leftJoin('imagens','imagens.id_corretor','=','corretores.id')
-        .select('corretores.*','imagens.path as imagem')
-        .where('corretores.id',String(id))
+        try {
+    		const {id} = req.params
+            const corretor = await knex('corretores')
+            .leftJoin('imagens','imagens.id_corretor','=','corretores.id')
+            .select('corretores.*','imagens.path as imagem')
+            .where('corretores.id',String(id))
 
-        const serializedCorretor = corretor.map(cr => {
-            return{
-                ...cr,
-                imagem: cr.imagem && `http://localhost:3333/uploads/corretores/${cr.imagem}`
-            }
-        })
-        return res.json(serializedCorretor)
+            const serializedCorretor = corretor.map(cr => {
+                return{
+                    ...cr,
+                    imagem: cr.imagem && `http://localhost:3333/uploads/corretores/${cr.imagem}`
+                }
+            })
+            return res.json(serializedCorretor)
+        } catch (error) {
+            res.status(500).send(error)
+        }
 	}
 	
     async index(req: Request, res: Response){
-        const corretores = await knex('corretores')
-        .leftJoin('imagens','imagens.id_corretor','=','corretores.id')
-        .select('corretores.*','imagens.path as imagem')
+        try {
+            const corretores = await knex('corretores')
+            .leftJoin('imagens','imagens.id_corretor','=','corretores.id')
+            .select('corretores.*','imagens.path as imagem')
 
-        const serializedCorretores = corretores.map(cr => {
-            return{
-                ...cr,
-                imagem: cr.imagem && `http://localhost:3333/uploads/corretores/${cr.imagem}`
-            }
-        })
-        return res.json(serializedCorretores)
+            const serializedCorretores = corretores.map(cr => {
+                return{
+                    ...cr,
+                    imagem: cr.imagem && `http://localhost:3333/uploads/corretores/${cr.imagem}`
+                }
+            })
+            return res.json(serializedCorretores)
+        } catch (error) {
+            res.status(500).send(error)
+        }
     }
 
     async create(req: Request, res: Response){
@@ -55,8 +63,7 @@ class CorretoresController{
             res.status(201).send()
 
         } catch (error) {
-           console.log(error)
-           res.send(error)
+            res.status(500).send(error)
         }
     }
 
@@ -78,8 +85,7 @@ class CorretoresController{
             res.status(204).send()
 
         } catch (error) {
-           console.log(error)
-           res.send(error)
+            res.status(500).send(error)
         }
     }
 
