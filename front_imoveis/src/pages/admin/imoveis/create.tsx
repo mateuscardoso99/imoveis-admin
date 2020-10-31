@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom'
 
 import Layout from '../../../components/admin/layout/layout'
 import {apiGet} from '../../../services/api'
-import Menu from '../../../components/admin/layout/burger'
 import {useDispatch,useSelector} from 'react-redux'
 import {AplicationState} from '../../../store'
 
@@ -134,17 +133,15 @@ const CreateImovel = () => {
     }
 
     return(
-        <Menu>
-            <button className="back btn btn-primary" onClick={voltar}>←</button>
-            <h1 className="text-center mb-3 bg-light text-dark">Novo imóvel</h1>
-            <form onSubmit={cadastrarImovel} encType="multipart/form-data">
+        <Layout title="Novo imóvel" back="/imoveis">
+            <form onSubmit={cadastrarImovel} style={{marginBottom:'6rem'}}>
                     <div className="input-field">
                         <label htmlFor="inputEmail4">Descricao</label>
-                        <input type="text" id="descricao" name="descricao" onChange={handleInputChange}/>
+                        <input type="text" id="descricao" name="descricao" className="form-control" onChange={handleInputChange}/>
                     </div>
                     <div className="input-field">
                         <label htmlFor="inputPassword4">Valor R$</label>
-                        <input type="number" step="0.01" id="valor" name="valor" onChange={handleInputChange}/>
+                        <input type="number" step="0.01" id="valor" name="valor" className="form-control" onChange={handleInputChange}/>
                     </div>
 
                 <div className="form-row">
@@ -164,12 +161,12 @@ const CreateImovel = () => {
 
                 <div className="input-field">
                     <label htmlFor="endereco">Endereço</label>
-                    <input type="text" id="endereco" name="endereco" onChange={handleInputChange}/>
+                    <input type="text" id="endereco" name="endereco" className="form-control" onChange={handleInputChange}/>
                 </div>
  
                 <div className="input-field">
                     <label htmlFor="select_estado">Estado</label>
-                    <select id="select_estado" value="RS">
+                    <select id="select_estado" className="form-control" value="RS">
                     <option value="AC">Acre</option>
                     <option value="AL">Alagoas</option>
                     <option value="AP">Amapá</option>
@@ -201,13 +198,13 @@ const CreateImovel = () => {
                 </div>
                 <div className="input-field">
                     <label htmlFor="select_cidade">Cidade</label>
-                    <select id="select_cidade" value="Santa Maria">
+                    <select id="select_cidade" className="form-control" value="Santa Maria">
                         <option value="0" selected>Santa Maria</option>
                     </select>
                 </div>
                 <div className="input-field">
                     <label htmlFor="select_corretor">Corretor responsável</label>
-                    <select id="select_corretor" name="select_corretor" value={selectedCorretor} onChange={corretorSelecionado}>
+                    <select id="select_corretor" className="form-control" name="select_corretor" value={selectedCorretor} onChange={corretorSelecionado}>
                         <option value="0">Nenhum</option>
                         {corretores.map(c => (
                             <option key={c.id} value={c.id}>{c.nome}</option>
@@ -216,7 +213,7 @@ const CreateImovel = () => {
                 </div>
                 <div className="input-field">
                     <label htmlFor="select_corretor">Categoria</label>
-                    <select id="select_categoria" name="select_categoria" value={selectedCategoria} onChange={categoriaSelecionado}>
+                    <select id="select_categoria" className="form-control" name="select_categoria" value={selectedCategoria} onChange={categoriaSelecionado}>
                         <option value="0">Nenhum</option>
                         {categoria.map(cat => (
                             <option key={cat.id} value={cat.id}>{cat.descricao}</option>
@@ -225,13 +222,13 @@ const CreateImovel = () => {
                 </div>
                 <div className="input-field">
                     <label htmlFor="detalhes">Detalhes</label>
-                    <textarea rows={5} id="detalhes" name="detalhes" onChange={handleTextAreaChange}></textarea>
+                    <textarea rows={5} id="detalhes" name="detalhes" className="form-control" onChange={handleTextAreaChange}></textarea>
                 </div>
                 <div>
                     <button type="submit" className="btn btn-primary ml-5 mr-5">Cadastrar</button>
                 </div>
             </form>
-        </Menu>
+        </Layout>
     )
 }
 

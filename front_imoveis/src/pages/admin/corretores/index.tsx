@@ -2,7 +2,6 @@ import React, {useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import LoaderButton from '../../../components/admin/loaderButton/loader'
 import Layout from '../../../components/admin/layout/layout'
-import Menu from '../../../components/admin/layout/burger'
 import {useSelector,useDispatch} from 'react-redux'
 import {AplicationState} from '../../../store'
 import {corretorGet,corretorDelete} from '../../../actions/CorretorActions'
@@ -34,10 +33,8 @@ const Corretores = () => {
     }
 
     return(
-        <Menu>
+        <Layout title="Corretores" to="/corretores/create">
             {corretores.length === 0 && (<LoaderButton/>)}
-            <h1 className="text-center mb-3 bg-light text-dark">Corretores</h1>
-            <Link to="/corretores/create" className="add btn btn-primary">+</Link>
             <ul className="list-group">
                 {corretores.map(corretor => (
                 <li key={corretor.id} className="list-group-item">
@@ -55,7 +52,7 @@ const Corretores = () => {
                 </li>
                 ))}
             </ul>
-        </Menu>    
+        </Layout>    
     )
 }
 

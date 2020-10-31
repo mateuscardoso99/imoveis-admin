@@ -2,7 +2,6 @@ import React,{useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import Layout from '../../../components/admin/layout/layout'
 import LoaderButton from '../../../components/admin/loaderButton/loader'
-import Menu from '../../../components/admin/layout/burger'
 import {useSelector, useDispatch} from 'react-redux'
 
 import {AplicationState} from '../../../store'
@@ -35,10 +34,8 @@ const Users = () => {
     }
     
         return(
-            <Menu>
+            <Layout title="Usuários" to="/usuarios/create">
                 {users.length === 0 && (<LoaderButton/>)}
-                <Link to="/usuarios/create" className="add btn btn-primary">+</Link>
-                <h1 className="text-center mb-3 bg-light text-dark">Usuários</h1>
                 <div className="container-fluid">
                 <table className="table table-sm table-striped">
                     <thead className="thead-dark">
@@ -62,7 +59,7 @@ const Users = () => {
                     </tbody>
                 </table>
                 </div>
-            </Menu>
+            </Layout>
         )
 }
 

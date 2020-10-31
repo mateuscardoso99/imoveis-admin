@@ -13,7 +13,7 @@ import routes from './routes'
 import cors from 'cors'
 import path from 'path'
 
-import {checkJwt} from './auth/authController'
+import {checkJwt} from './auth/VerifyRequest'
 
 const app = express()
 

@@ -1,20 +1,20 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch} from 'react-router-dom'
 
-import Imoveis from './pages/admin/imoveis/imoveis'
+import Imoveis from './pages/admin/imoveis'
 import DetailImovel from './pages/admin/imoveis/detail'
 import UpdateImovel from './pages/admin/imoveis/update'
 import CreateImovel from './pages/admin/imoveis/create'
 
-import Corretores from './pages/admin/corretores/corretores'
+import Corretores from './pages/admin/corretores'
 import CreateCorretor from './pages/admin/corretores/create'
 import UpdateCorretor from './pages/admin/corretores/update'
 
-import Users from './pages/admin/users/usuarios'
+import Users from './pages/admin/users'
 import CreateUser from './pages/admin/users/create'
 import UserUpdate from './pages/admin/users/update'
 
-import Agendamentos from './pages/admin/agendamentos/agendamentos'
+import Agendamentos from './pages/admin/agendamentos'
 
 import SignIn from './pages/admin/signIn/signIn'
 

@@ -1,7 +1,6 @@
 import React, {useState,useEffect,FormEvent,ChangeEvent} from 'react'
 import {useHistory, useParams} from 'react-router-dom'
 import Layout from '../../../components/admin/layout/layout'
-import Menu from '../../../components/admin/layout/burger'
 import {useDispatch,useSelector} from 'react-redux'
 import {AplicationState} from '../../../store'
 
@@ -9,7 +8,7 @@ import {userGetSingle, userUpdate} from '../../../actions/UserActions'
 
 const UserUpdate = () => {
     const history = useHistory()
-    const {id} = useParams()
+    const {id}:any = useParams()
 
     const dispatch = useDispatch()
 
@@ -54,9 +53,7 @@ const UserUpdate = () => {
     }
 
     return(
-        <Menu>
-            <button className="back btn btn-primary" onClick={voltar}>←</button>
-            <div className="container">
+        <Layout title="Editar usuário" back="/usuarios">
             <form onSubmit={UpdateUsuario}>
                 <div className="input-field">
                     <label htmlFor="username">Nome</label>
@@ -70,8 +67,7 @@ const UserUpdate = () => {
                     <button type="submit" className="btn btn-primary">Atualizar</button>
                 </div>
             </form>
-            </div>
-        </Menu>
+        </Layout>
     )
 }
 

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import Layout from '../../../components/admin/layout/layout'
-import Menu from '../../../components/admin/layout/burger'
 import LoaderButton from '../../../components/admin/loaderButton/loader'
 
 import {useDispatch,useSelector} from 'react-redux'
@@ -37,10 +36,8 @@ const Imoveis = () => {
     }
 
     return(
-        <Menu title="ssss">
+        <Layout title="Imóveis" to="/imoveis/create">
             {imoveis.length === 0 && (<LoaderButton/>)}
-            <Link to="/imoveis/create" className="add btn btn-primary">+</Link>
-            <h1 className="text-center bg-light text-dark">Imoveis Cadastrados</h1>
             {imoveis.map(imovel => (
                 <div key={imovel.id} className="card mt-5 ml-auto mr-auto border-dark mb-3" style={{width: "70%"}}>
                     <img src={imovel.imagens ? imovel.imagens[Number(0)] : ''} className="card-img-top" alt="..."/>
@@ -56,7 +53,7 @@ const Imoveis = () => {
                     </div>
                 </div>
             ))}
-        </Menu>
+        </Layout>
     )
 }
 

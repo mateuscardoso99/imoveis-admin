@@ -2,7 +2,6 @@ import React, {useState,useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import Layout from '../../../components/admin/layout/layout'
 import LoaderButton from '../../../components/admin/loaderButton/loader'
-import Menu from '../../../components/admin/layout/burger'
 import {apiGet, apiDelete, apiPut} from '../../../services/api'
 
 interface Agendamentos{
@@ -45,9 +44,8 @@ const Agendamentos = () => {
 
 
     return(
-        <Menu>
+        <Layout title="Agendamentos">
             {agendamentos.length === 0 && (<LoaderButton/>)}
-            <h1 className="text-center mb-3 bg-light text-dark">Agendamentos</h1>
             <div className="container-fluid">
             <table className="table table-sm table-responsive-sm table-striped">
                 <thead className="thead-dark">
@@ -75,7 +73,7 @@ const Agendamentos = () => {
                 </tbody>
             </table>
             </div>
-        </Menu>
+        </Layout>
     )
 }
 

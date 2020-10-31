@@ -1,13 +1,12 @@
 import React, {useState,useEffect,ChangeEvent,FormEvent} from 'react'
 import {useHistory,useParams} from 'react-router-dom'
 import Layout from '../../../components/admin/layout/layout'
-import Menu from '../../../components/admin/layout/burger'
 import {useDispatch} from 'react-redux'
 
 import {corretorUpdate, corretorGetSingle} from '../../../actions/CorretorActions'
 
 const UpdateCorretor = () => {
-    const {id} = useParams()
+    const {id}:any = useParams()
     const history = useHistory()
 
     const dispatch = useDispatch()
@@ -54,10 +53,9 @@ const UpdateCorretor = () => {
     }
 
     return(
-        <Menu>
-            <button className="back btn btn-primary" onClick={voltar}>←</button>
+        <Layout title="Editar corretor" back="/corretores">
             <form onSubmit={atualizarCorretor}>
-                <div>
+                <div className="input-field">
                     <label htmlFor="nome">Nome</label>
                     <input type="text" className="form-control" id="nome" name="nome" value={formData.nome} onChange={handleInputChange}/>
                 </div>
@@ -65,11 +63,11 @@ const UpdateCorretor = () => {
                     <label htmlFor="email">Email</label>
                     <input type="email" className="form-control" id="email" name="email" value={formData.email} onChange={handleInputChange}/>
                 </div>
-                <div className="input-field">
+                <div>
                     <button type="submit" className="btn btn-primary">Atualizar</button>
                 </div>
             </form>
-        </Menu>
+        </Layout>
     )
 }
 

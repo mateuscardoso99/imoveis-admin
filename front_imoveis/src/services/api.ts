@@ -2,7 +2,7 @@ import axios from 'axios'
 import {getToken, getRefreshToken} from '../storage/account'
 
 export const getApiUrl = (path:string) => {
-    return `http://localhost:3333${path}`
+    return `http://10.0.0.6:3333${path}`
 }
 
 export const getHeaders = () => {

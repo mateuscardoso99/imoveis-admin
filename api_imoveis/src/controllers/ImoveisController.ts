@@ -1,38 +1,9 @@
 import { Request, Response} from 'express'
 import knex from '../database/connection'
+import fs from 'fs'
+import path from 'path'
 
 class ImoveisController{
-
-    /*async show(req: Request, res: Response){
-        const {id} = req.params
-        const imovel = await knex('imovel')
-        .join('categoria', 'imovel.id_categoria','=','categoria.id')
-        .join('corretor','imovel.id_corretor','=','corretor.id')
-        .select('imovel.*', 'categoria.id as categoriaId', 'categoria.tipo', 'corretor.id as corretorId', 'corretor.nome')
-        .where('imovel.id', String(id))
-
-        const serializedImovel = imovel.map(imovel => {
-            return{
-                ...imovel,
-                image_url: `http://localhost:3333/uploads/imoveis/${imovel.image}`
-            }
-        })
-        return res.json(serializedImovel)
-    }*/
-
-    /*async index(req: Request, res: Response){
-        const imovel = await knex('imovel')
-        .join('categoria', 'imovel.id_categoria','=','categoria.id')
-        .join('corretor','imovel.id_corretor','=','corretor.id')
-        .select('imovel.*', 'categoria.id as categoriaId', 'categoria.tipo', 'corretor.id as corretorId', 'corretor.nome')
-        const serializedImovel = imovel.map(imovel => {
-            return{
-                ...imovel,
-                image_url: `http://localhost:3333/uploads/imoveis/${imovel.image}`
-            }
-        })
-        return res.json(serializedImovel)
-    }*/
     async show(req: Request, res: Response){
         try{
             const {id} = req.params
@@ -69,7 +40,7 @@ class ImoveisController{
                 return{
                     ...imovel,
                     imagens: imovel.imagens?.split(',')
-                    .map(img => `http://localhost:3333/uploads/imoveis/${img}`)
+                    .map(img => `http://10.0.0.6:3333/uploads/imoveis/${img}`)
                 }
             })
             return res.json(serializedImoveis)
@@ -144,7 +115,6 @@ class ImoveisController{
                 id_corretor
             } = req.body
 
-
             const trs = await knex.transaction()
 
             await trs('imoveis').update({ 
@@ -158,7 +128,7 @@ class ImoveisController{
                 valor,
                 id_categoria: id_categoria === '0' ? null : id_categoria,
                 id_corretor: id_corretor === '0' ? null : id_corretor
-             }).where({ id })
+            }).where({ id })
 
             if(files){
                 const images = files.map(img => {
@@ -183,6 +153,26 @@ class ImoveisController{
     async delete(req: Request, res: Response){
         try {
             const { id } = req.params
+            const imovel = await knex('imoveis')
+            .leftJoin('imagens','imagens.id_imovel','=','imoveis.id')
+            .select('imoveis.*',
+                knex.raw(`group_concat(imagens.path) as imagens`)).groupBy('imoveis.id')
+            .where('imoveis.id', id)
+
+            if(!imovel){
+                return res.status(400).json({ message:'imóvel não existe.'})
+            }
+
+            if(imovel[0].imagens){
+                imovel[0].imagens.split(',').forEach(img => 
+                    fs.unlink(path.resolve(__dirname,'..','..','uploads','imoveis', `${img}`), (err) => {
+                        if (err) {
+                            console.error(err)
+                            return res.status(200).send(err)
+                        }
+                    })
+                )  
+            }
 
             await knex('imoveis')
                 .where({ id })

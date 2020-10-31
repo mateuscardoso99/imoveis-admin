@@ -1,5 +1,7 @@
 import { Request, Response, response} from 'express'
 import knex from '../database/connection'
+import fs from 'fs'
+import path from 'path'
 
 class CorretoresController{
 
@@ -92,12 +94,24 @@ class CorretoresController{
     async delete(req: Request, res: Response){
         try {
             const { id } = req.params
-            const corretor = await knex('corretores').where('id', id).first()
+            const corretor = await knex('corretores')
+            .leftJoin('imagens','imagens.id_corretor','=','corretores.id')
+            .select('corretores.*','imagens.path as imagem')
+            .where('corretores.id', id)
             
             if(!corretor){
                 return res.status(400).json({ message:'corretor não existe.'})
             }
-           
+
+            if(corretor[0].imagem){
+                fs.unlink(path.resolve(__dirname,'..','..','uploads','corretores', `${corretor[0].imagem}`), (err) => {
+                    if (err) {
+                        console.error(err)
+                        return res.status(200).send(err)
+                    }
+                })
+            }
+
             await knex('corretores').where({ id }).del()
             return res.status(204).send()
 

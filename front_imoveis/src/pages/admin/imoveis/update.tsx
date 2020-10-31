@@ -4,7 +4,6 @@ import { LeafletMouseEvent } from 'leaflet'
 import { useParams, useHistory } from 'react-router-dom'
 
 import Layout from '../../../components/admin/layout/layout'
-import Menu from '../../../components/admin/layout/burger'
 import {useSelector,useDispatch} from 'react-redux'
 import {AplicationState} from '../../../store'
 
@@ -21,7 +20,7 @@ interface Categoria{
 const UpdateImovel = () => {
 
     const history = useHistory()
-    const {id} = useParams()
+    const {id}:any = useParams()
 
     const {imovel} = useSelector((state: AplicationState)=>state.imoveis)
     const {corretores} = useSelector((state: AplicationState)=>state.corretores)
@@ -152,16 +151,15 @@ const UpdateImovel = () => {
 
 
     return (
-        <Menu>
-            <button className="back btn btn-primary" onClick={voltar}>←</button>
-            <form onSubmit={updateImovel} className="container mt-5 mb-5 justify-content-center">
-                <div className="form-group col-12">
+        <Layout title="Editar imóvel" back="/imoveis">
+            <form onSubmit={updateImovel} style={{marginBottom:'6rem'}}>
+                <div className="input-field">
                     <label htmlFor="descricao">Descricao</label>
-                    <input type="text" className="form-control" id="descricao" name="descricao" value={formData.descricao} onChange={handleInputChange}/>
+                    <input type="text" id="descricao" name="descricao" className="form-control" value={formData.descricao} onChange={handleInputChange}/>
                 </div>
-                <div className="form-group col-8">
+                <div className="input-field">
                     <label htmlFor="valor">Valor R$</label>
-                    <input type="number" step="0.01" className="form-control" id="valor" name="valor" value={formData.valor} onChange={handleInputChange}/>
+                    <input type="number" step="0.01" id="valor" name="valor" className="form-control" value={formData.valor} onChange={handleInputChange}/>
                 </div>
 
                 <div className="form-row">
@@ -179,14 +177,14 @@ const UpdateImovel = () => {
                     <Marker position={imovelPosition}/>
                 </Map>
 
-                <div className="form-group col-12">
+                <div className="input-field">
                     <label htmlFor="endereco">Endereço</label>
-                    <input type="text" className="form-control" id="endereco" name="endereco" value={formData.endereco} onChange={handleInputChange}/>
+                    <input type="text" id="endereco" name="endereco" className="form-control" value={formData.endereco} onChange={handleInputChange}/>
                 </div>
 
-                <div className="form-group col-12">
+                <div className="input-field">
                     <label htmlFor="select_estado">Estado</label>
-                    <select id="select_estado" value="RS" className="form-control">
+                    <select id="select_estado" className="form-control" value="RS">
                         <option value="AC">Acre</option>
                         <option value="AL">Alagoas</option>
                         <option value="AP">Amapá</option>
@@ -216,25 +214,25 @@ const UpdateImovel = () => {
                         <option value="TO">Tocantins</option>
                     </select>
                 </div>
-                <div className="form-group col-12">
+                <div className="input-field">
                         <label htmlFor="select_cidade">Cidade</label>
-                        <select id="select_cidade" value="Santa Maria" className="form-control">
+                        <select id="select_cidade" className="form-control" value="Santa Maria">
                             <option value="0" selected>Santa Maria</option>
                     </select>
                 </div>
 
-                <div className="form-group col-12">
+                <div className="input-field">
                     <label htmlFor="select_corretor">Corretor responsável</label>
-                    <select id="select_corretor" name="select_corretor" value={selectedCorretor} className="form-control" onChange={corretorSelecionado}>
+                    <select id="select_corretor" name="select_corretor" className="form-control" value={selectedCorretor} onChange={corretorSelecionado}>
                         <option value="0">Nenhum</option>
                         {corretores.map(c => (
                             <option key={c.id} value={c.id}>{c.nome}</option>
                         ))}
                     </select>
                 </div>
-                <div className="form-group col-12">
+                <div className="input-field">
                     <label htmlFor="select_categoria">Categoria</label>
-                    <select id="select_categoria" name="select_categoria" value={selectedCategoria} className="form-control" onChange={categoriaSelecionado}>
+                    <select id="select_categoria" name="select_categoria" className="form-control" value={selectedCategoria} onChange={categoriaSelecionado}>
                         <option value="0">Nenhum</option>
                         {categoria.map(cat => (
                             <option key={cat.id} value={cat.id}>{cat.descricao}</option>
@@ -242,15 +240,15 @@ const UpdateImovel = () => {
                     </select>
                 </div>
 
-                <div className="form-group col-12">
+                <div className="input-field">
                     <label htmlFor="detalhes">Detalhes</label>
-                    <textarea className="form-control" rows={5} id="detalhes" name="detalhes" value={formData.detalhes} onChange={handleTextAreaChange}></textarea>
+                    <textarea rows={5} id="detalhes" name="detalhes" className="form-control" value={formData.detalhes} onChange={handleTextAreaChange}></textarea>
                 </div>
                 <div className="form-row col-md-12 justify-content-center">
                     <button type="submit" className="btn btn-primary">Atualizar</button>
                 </div>
             </form>
-        </Menu>
+        </Layout>
     )
 }
 

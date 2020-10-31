@@ -2,7 +2,6 @@ import React,{useState,ChangeEvent,FormEvent} from 'react'
 import {useHistory} from 'react-router-dom'
 
 import Layout from '../../../components/admin/layout/layout'
-import Menu from '../../../components/admin/layout/burger'
 import {useDispatch} from 'react-redux'
 import {userCreate} from '../../../actions/UserActions'
 
@@ -42,9 +41,7 @@ const CreateUser = () => {
     }
 
     return(
-        <Menu>
-            <button className="back btn btn-primary" onClick={voltar}>←</button>
-            <h1 className="text-center mb-3 bg-light text-dark">Novo usuário</h1>
+        <Layout title="Novo usuário" back="/usuarios">
             <form onSubmit={cadastrarUsuario}>
                 <div className="input-field">
                     <label htmlFor="username">Nome</label>
@@ -58,7 +55,7 @@ const CreateUser = () => {
                     <button type="submit" className="btn btn-primary">Criar Usuário</button>
                 </div>
             </form>
-        </Menu>
+        </Layout>
     )
 }
 

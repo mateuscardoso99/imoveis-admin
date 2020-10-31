@@ -1,7 +1,6 @@
 import React, {useState, FormEvent, ChangeEvent} from 'react'
 import Layout from '../../../components/admin/layout/layout'
 import { useHistory } from 'react-router-dom'
-import Menu from '../../../components/admin/layout/burger'
 import {useDispatch} from 'react-redux'
 import { corretorCreate } from '../../../actions/CorretorActions'
 
@@ -66,9 +65,7 @@ const CreateCorretor = () => {
     }
 
     return(
-        <Menu>
-            <button className="back btn btn-primary" onClick={voltar}>←</button>
-            <h1 className="text-center mb-3 bg-light text-dark">Novo corretor</h1>
+        <Layout title="Novo corretor" back="/corretores">
             <form onSubmit={cadastrarCorretor}>
                 <div>
                     <label htmlFor="imageImovel">Selecione uma foto:</label>
@@ -86,7 +83,7 @@ const CreateCorretor = () => {
                     <button type="submit" className="btn btn-primary">Cadastrar</button>
                 </div>
             </form>
-        </Menu>
+        </Layout>
     )
 }
 export default CreateCorretor

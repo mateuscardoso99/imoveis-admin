@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useParams, Link, useHistory } from 'react-router-dom'
 import Layout from '../../../components/admin/layout/layout'
 import LoaderButton from '../../../components/admin/loaderButton/loader'
-import Menu from '../../../components/admin/layout/burger'
 import {useSelector,useDispatch} from 'react-redux'
 import {AplicationState} from '../../../store'
 import {imovelGetSingle,imovelDelete} from '../../../actions/ImovelActions'
@@ -15,7 +14,7 @@ import Slider from 'react-slick'
 const DetailImovel = () => {
 
     const history = useHistory()
-    const {id} = useParams()
+    const {id}:any = useParams()
 
     const {imovel} = useSelector((state: AplicationState)=>state.imoveis)
     const dispatch = useDispatch()
@@ -42,11 +41,8 @@ const DetailImovel = () => {
     }
 
         return(
-            <Menu>
+            <Layout title="Detalhes" back="/imoveis">
                 {!imovel && (<LoaderButton/>)}
-                <button className="back btn btn-primary" onClick={voltar}>←</button>
-                <h1 className="text-center bg-light text-dark">Dados do imóvel</h1>
-
                 <div className="container">
                     <Carousel showThumbs={false} infiniteLoop={true}>
                         {imovel.imagens && imovel.imagens.map(image=>(
@@ -77,7 +73,7 @@ const DetailImovel = () => {
                         </p>
                     </div>
                 </div>
-            </Menu>
+            </Layout>
         )
 }
 
