@@ -26,10 +26,16 @@ class UsersController{
 
     async create(req: Request, res: Response){
         try {
-            const { login, password } = req.body
+            const { login, password, password_confirmation } = req.body
+            
+            if(!(password === password_confirmation)){
+                return res.status(400).send()
+            }
+            
             const hash = bcrypt.hashSync(password, 10)
             await knex('users').insert({ usuario: login, senha: hash })
             return res.status(201).send()
+        
         } catch (error) {
             res.status(500).send(error)
         }
@@ -37,11 +43,15 @@ class UsersController{
 
     async update(req: Request, res: Response){
         try {
-            const { login, password } = req.body
+            const { login, password, password_confirmation } = req.body
             const { id } = req.params
 
-            await knex('users').update({ usuario:login, senha: password }).where({ id })
+            if(!(password === password_confirmation)){
+                return res.status(400).send()
+            }
 
+            const hash = bcrypt.hashSync(password, 10)
+            await knex('users').update({ usuario: login, senha: hash }).where({ id })
             return res.status(204).send()
 
         } catch (error) {

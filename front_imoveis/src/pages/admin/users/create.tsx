@@ -12,6 +12,7 @@ const CreateUser = () => {
     const [formData, setFormData] = useState({
         login: '',
         password: '',
+        password_confirmation: ''
     })
 
     function handleInputChange(event: ChangeEvent<HTMLInputElement>){
@@ -44,12 +45,16 @@ const CreateUser = () => {
         <Layout title="Novo usuário" back="/usuarios">
             <form onSubmit={cadastrarUsuario}>
                 <div className="input-field">
-                    <label htmlFor="username">Nome</label>
+                    <label htmlFor="login">Nome</label>
                     <input type="text" className="form-control" id="login" name="login" onChange={handleInputChange}/>
                 </div>
                 <div className="input-field">
-                    <label htmlFor="userpassword">Senha</label>
+                    <label htmlFor="password">Senha</label>
                     <input type="password" className="form-control" id="password" name="password" onChange={handleInputChange}/>
+                </div>
+                <div className="input-field">
+                    <label htmlFor="password_confirmation">Confirme a senha</label>
+                    <input type="password" className="form-control" id="password_confirmation" name="password_confirmation" onChange={handleInputChange}/>
                 </div>
                 <div>
                     <button type="submit" className="btn btn-primary">Criar Usuário</button>

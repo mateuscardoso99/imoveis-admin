@@ -25,7 +25,6 @@ const CreateImovel = () => {
     const [initialPosition, setInitialPosition] = useState<[number,number]>([0,0])
     const [selectedPosition, setSelectedPosition] = useState<[number,number]>([0,0])
 
-    //const [corretor, setCorretor] = useState<Corretores[]>([])
     const [selectedCorretor, setSelectedCorretor] = useState('0')
 
     const [categoria, setCategoria] = useState<Categoria[]>([])

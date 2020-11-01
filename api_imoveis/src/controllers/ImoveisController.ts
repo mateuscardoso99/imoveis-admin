@@ -40,7 +40,7 @@ class ImoveisController{
                 return{
                     ...imovel,
                     imagens: imovel.imagens?.split(',')
-                    .map(img => `http://10.0.0.6:3333/uploads/imoveis/${img}`)
+                    .map(img => `http://10.0.0.5:3333/uploads/imoveis/${img}`)
                 }
             })
             return res.json(serializedImoveis)

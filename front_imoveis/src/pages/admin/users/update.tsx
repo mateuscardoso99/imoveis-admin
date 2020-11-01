@@ -14,13 +14,14 @@ const UserUpdate = () => {
 
     const [formData,setFormData] = useState({
         login: '',
-        password: ''
+        password: '',
+        password_confirmation: ''
     })
 
     useEffect(() => {
         const getUser = async () =>{
             const resp = await dispatch(userGetSingle(id))
-            setFormData({login: resp.payload.data[0].usuario, password: ''})
+            setFormData({login: resp.payload.data[0].usuario, password: '', password_confirmation: ''})
         }
         getUser()
     }, [id, userGetSingle])
@@ -56,12 +57,16 @@ const UserUpdate = () => {
         <Layout title="Editar usuário" back="/usuarios">
             <form onSubmit={UpdateUsuario}>
                 <div className="input-field">
-                    <label htmlFor="username">Nome</label>
+                    <label htmlFor="login">Nome</label>
                     <input type="text" className="form-control" id="login" name="login" value={formData.login} onChange={handleInputChange}/>
                 </div>
                 <div className="input-field">
-                    <label htmlFor="userpassword">Nova senha</label>
+                    <label htmlFor="password">Nova senha</label>
                     <input type="password" className="form-control" id="password" name="password" value={formData.password} onChange={handleInputChange}/>
+                </div>
+                <div className="input-field">
+                    <label htmlFor="password_confirmation">Confirme a senha</label>
+                    <input type="password" className="form-control" id="password_confirmation" name="password_confirmation" onChange={handleInputChange}/>
                 </div>
                 <div>
                     <button type="submit" className="btn btn-primary">Atualizar</button>

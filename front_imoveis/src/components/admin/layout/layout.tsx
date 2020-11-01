@@ -32,6 +32,7 @@ const MenuBurger = ({children, title, to, back}: Props) =>{
                     <Link to="/corretores">Corretores</Link>
                     <Link to="/agendamentos">Agendamentos</Link>
                     <Link to="/usuarios">Usuários</Link>
+                    <a href="#">Sair</a>
                 </Menu>
                 <div className="title">
                     <h2>{title}</h2>

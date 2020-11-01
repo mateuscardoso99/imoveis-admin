@@ -48,6 +48,7 @@ text-decoration: none;
 }
 
 .top-menu{
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -106,9 +107,11 @@ text-decoration: none;
     height: 40px;
     border-radius: 50%;
     font-size: 17px;
-    font-weight: bold;
     background-color: rgb(209, 1, 3);
     border-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .back{
@@ -152,7 +155,8 @@ text-decoration: none;
     right: 5px;
   }
   .conteudo form {
-    margin: 0;
+    margin-left: 0;
+    margin-right: 0;
   }
 }
 
