@@ -15,6 +15,8 @@ import path from 'path'
 
 import {checkJwt} from './auth/VerifyRequest'
 
+require('dotenv').config()
+
 const app = express()
 
 app.use(cors())
@@ -24,4 +26,8 @@ app.use('/uploads',express.static(path.resolve(__dirname,'..','uploads')))
 app.use(checkJwt)
 app.use(routes)
 
-app.listen(3333, () => console.log('SERVIDOR RODANDO'))
+if (process.env.NODE_ENV !== 'test') {
+	app.listen(3333, () => console.log('SERVIDOR RODANDO'))
+}
+
+export default app

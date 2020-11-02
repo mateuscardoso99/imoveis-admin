@@ -80,15 +80,17 @@ class ImoveisController{
                 id_corretor: id_corretor === '0' ? null : id_corretor
             })
 
-            const images = files.map(img => {
-                return{
-                    path: img.filename,
-                    id_imovel: idImovel[0],
-                    id_corretor: null
-                }
-            })
-            await trs('imagens').insert(images)
-
+            if(files){
+                const images = files.map(img => {
+                    return{
+                        path: img.filename,
+                        id_imovel: idImovel[0],
+                        id_corretor: null
+                    }
+                })
+                await trs('imagens').insert(images)
+            }
+            
             await trs.commit()
 
             res.status(201).send()

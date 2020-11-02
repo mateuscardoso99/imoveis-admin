@@ -4,9 +4,11 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "dev": "ts-node-dev --ignore-watch node_modules src/server.ts",
+    "dev": "ts-node-dev --ignore-watch node_modules --ignore tests src/server.ts",
     "knex:seed": "knex --knexfile knexfile.ts seed:run",
-    "knex:migrate": "knex --knexfile knexfile.ts migrate:latest"
+    "knex:migrate": "knex --knexfile knexfile.ts migrate:latest",
+    "pretest": "NODE_ENV=test knex --knexfile knexfile.ts migrate:rollback --all && NODE_ENV=test knex --knexfile knexfile.ts migrate:latest && NODE_ENV=test knex --knexfile knexfile.ts seed:run",
+    "test": "NODE_ENV=test jest"
   },
   "keywords": [],
   "author": "",
@@ -14,20 +16,27 @@
   "dependencies": {
     "@types/cors": "^2.8.6",
     "@types/jsonwebtoken": "^8.5.0",
+    "babel-jest": "^26.6.2",
     "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jest": "^26.6.1",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.1",
     "multer": "^1.4.2",
     "mysql": "^2.18.1",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "sqlite3": "^5.0.0",
+    "ts-jest": "^26.4.3"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.12.1",
     "@types/bcrypt": "^3.0.0",
     "@types/express": "^4.17.6",
+    "@types/jest": "^26.0.15",
     "@types/multer": "^1.4.3",
+    "supertest": "^6.0.0",
     "ts-node": "^8.10.2",
     "ts-node-dev": "^1.0.0-pre.49",
     "typescript": "^3.9.5"
