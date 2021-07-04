@@ -1,9 +1,6 @@
 .carousel .slide{
   background-color: #dfe3e3 !important;
 }
-.carousel img{
-  width: 55% !important;
-}
 
 .loader{
   position: absolute;

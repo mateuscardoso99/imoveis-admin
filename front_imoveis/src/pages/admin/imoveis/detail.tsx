@@ -46,7 +46,7 @@ const DetailImovel = () => {
                 <div className="container">
                     <Carousel showThumbs={false} infiniteLoop={true}>
                         {imovel.imagens && imovel.imagens.map(image=>(
-                            <div key={image} style={{ width: "80%", margin:'auto', color: "#fff" }}>
+                            <div key={image}>
                                 <img src={image}/>
                             </div>
                         ))}

@@ -12,14 +12,6 @@ export async function up(knex: Knex){
         	.inTable('imoveis')
         	.onDelete('cascade')
             .onUpdate('cascade')
-
-        table.integer('id_corretor')
-        	.nullable()
-        	.unsigned()
-        	.references('id')
-        	.inTable('corretores')
-        	.onDelete('cascade')
-            .onUpdate('cascade')
     })
 }
 

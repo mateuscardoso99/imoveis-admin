@@ -37,7 +37,6 @@ const Imoveis = () => {
 
     return(
         <Layout title="Imóveis" to="/imoveis/create">
-            {imoveis.length === 0 && (<LoaderButton/>)}
             {imoveis.map(imovel => (
                 <div key={imovel.id} className="card mt-5 ml-auto mr-auto border-dark mb-3" style={{width: "70%"}}>
                     <img src={imovel.imagens ? imovel.imagens[Number(0)] : ''} className="card-img-top" alt="..."/>

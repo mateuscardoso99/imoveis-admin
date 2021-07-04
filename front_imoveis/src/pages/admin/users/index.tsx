@@ -35,7 +35,6 @@ const Users = () => {
     
         return(
             <Layout title="Usuários" to="/usuarios/create">
-                {users.length === 0 && (<LoaderButton/>)}
                 <div className="container-fluid">
                 <table className="table table-sm table-striped">
                     <thead className="thead-dark">

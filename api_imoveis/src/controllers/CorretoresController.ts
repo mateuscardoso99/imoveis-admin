@@ -9,9 +9,7 @@ class CorretoresController{
         try {
     		const {id} = req.params
             const corretor = await knex('corretores')
-            .leftJoin('imagens','imagens.id_corretor','=','corretores.id')
-            .select('corretores.*','imagens.path as imagem')
-            .where('corretores.id',String(id))
+                                    .where({id})
 
             const serializedCorretor = corretor.map(cr => {
                 return{
@@ -28,8 +26,6 @@ class CorretoresController{
     async index(req: Request, res: Response){
         try {
             const corretores = await knex('corretores')
-            .leftJoin('imagens','imagens.id_corretor','=','corretores.id')
-            .select('corretores.*','imagens.path as imagem')
 
             const serializedCorretores = corretores.map(cr => {
                 return{
@@ -46,21 +42,10 @@ class CorretoresController{
     async create(req: Request, res: Response){
         try {
             const { nome, email } = req.body
-            const file = req.file as Express.Multer.File
+            const file = req.file as Express.Multer.File || null
 
-            const trs = await knex.transaction()
-
-            const idCorretor =  await trs('corretores').insert({ nome, email })
-
-            if(file){
-                await trs('imagens').insert({
-                    path: file.filename,
-                    id_imovel: null,
-                    id_corretor: idCorretor[0]
-                })
-            }
-
-            await trs.commit()
+            await knex('corretores')
+                    .insert({ nome, email, imagem:file.filename })
 
             res.status(201).send()
 
@@ -74,15 +59,11 @@ class CorretoresController{
             const { id } = req.params
             const { nome, email } = req.body
 
-            const trs = await knex.transaction()
-
-            await trs('corretores')
+            await knex('corretores')
             .update({ 
                 nome,
                 email})
             .where({ id })
-
-            await trs.commit()
 
             res.status(204).send()
 
@@ -94,10 +75,7 @@ class CorretoresController{
     async delete(req: Request, res: Response){
         try {
             const { id } = req.params
-            const corretor = await knex('corretores')
-            .leftJoin('imagens','imagens.id_corretor','=','corretores.id')
-            .select('corretores.*','imagens.path as imagem')
-            .where('corretores.id', id)
+            const corretor = await knex('corretores').where({id})
             
             if(!corretor){
                 return res.status(400).json({ message:'corretor não existe.'})

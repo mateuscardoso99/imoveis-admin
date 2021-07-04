@@ -10,7 +10,7 @@ export async function up(knex: Knex){
         table.decimal('longitude',10,8).notNullable()
         table.string('cidade',50).notNullable()
         table.string('uf', 2).notNullable()
-        table.float('valor').notNullable()
+        table.decimal('valor',10,2).notNullable()
 
         table.integer('id_categoria')
             .nullable()

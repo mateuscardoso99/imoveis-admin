@@ -34,24 +34,44 @@ const Corretores = () => {
 
     return(
         <Layout title="Corretores" to="/corretores/create">
-            {corretores.length === 0 && (<LoaderButton/>)}
-            <ul className="list-group">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th scope="col">Foto</th>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Opções</th>
+                </tr>
+              </thead>
+              <tbody>
                 {corretores.map(corretor => (
-                <li key={corretor.id} className="list-group-item">
-                    <div className="card mt-5 ml-auto mr-auto mb-5" style={{width: "70%"}}>
-                        <img src={corretor.imagem ? corretor.imagem : ''} className="card-img-top" alt="..."/>
-                        <div className="card-body">
-                            <h5 className="card-title">{corretor.nome}</h5>
-                            <p className="card-text">{corretor.email}</p>
-                        </div>
-                        <div className="card-footer">
-                            <Link to={`/corretores/update/${corretor.id}`} className="btn btn-success mr-2 ml-2">Atualizar</Link>
-                            <button className="btn btn-danger ml-2" onClick={(e) => {e.preventDefault(); apagar(corretor.id)}}>Apagar</button>
-                        </div>
-                    </div>
-                </li>
+                    <tr key={corretor.id}>
+                        <td>
+                            <img 
+                                src={corretor.imagem ? corretor.imagem : ''} 
+                                className="img-fluid" 
+                                alt={corretor.nome}/>
+                        </td>
+                        <td>{corretor.nome}</td>
+                        <td>{corretor.email}</td>
+                        <td>
+                            <Link 
+                                to={`/corretores/update/${corretor.id}`} 
+                                className="btn btn-success mr-2 ml-2"
+                            >
+                                Atualizar
+                            </Link>
+                            <button 
+                                className="btn btn-danger ml-2" 
+                                onClick={(e) => {e.preventDefault(); apagar(corretor.id)}}
+                            >
+                                Apagar
+                            </button>
+                        </td>
+                    </tr>
                 ))}
-            </ul>
+              </tbody>
+            </table>
         </Layout>    
     )
 }

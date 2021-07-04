@@ -8,9 +8,9 @@ class ImoveisController{
         try{
             const {id} = req.params
             const imovel = await knex('imoveis')
-            .leftJoin('categorias', 'imoveis.id_categoria','=','categorias.id')
-            .leftJoin('corretores','imoveis.id_corretor','=','corretores.id')
-            .leftJoin('imagens','imagens.id_imovel','=','imoveis.id')
+            .innerJoin('categorias', 'imoveis.id_categoria','=','categorias.id')
+            .innerJoin('corretores','imoveis.id_corretor','=','corretores.id')
+            .innerJoin('imagens','imagens.id_imovel','=','imoveis.id')
             .select('imoveis.*', 'categorias.descricao as categoria', 'corretores.nome as corretor',
                 knex.raw(`group_concat(imagens.path) as imagens`)).groupBy('imoveis.id')
             .where('imoveis.id', String(id))
@@ -18,8 +18,7 @@ class ImoveisController{
             const serializedImovel = imovel.map(imovel => {
                 return{
                     ...imovel,
-                    imagens: imovel.imagens?.split(',')
-                    .map(img =>`http://localhost:3333/uploads/imoveis/${img}`)
+                    imagens: imovel.imagens?.split(',').map(img =>`http://localhost:3333/uploads/imoveis/${img}`)
                 }
             })
             return res.json(serializedImovel)
@@ -31,16 +30,15 @@ class ImoveisController{
     async index(req: Request, res: Response){
         try{
             const imoveis = await knex('imoveis')
-            .leftJoin('categorias', 'imoveis.id_categoria','=','categorias.id')
-            .leftJoin('corretores','imoveis.id_corretor','=','corretores.id')
-            .leftJoin('imagens','imagens.id_imovel','=','imoveis.id')
+            .innerJoin('categorias', 'imoveis.id_categoria','=','categorias.id')
+            .innerJoin('corretores','imoveis.id_corretor','=','corretores.id')
+            .innerJoin('imagens','imagens.id_imovel','=','imoveis.id')
             .select('imoveis.*', 'categorias.descricao as categoria', 'corretores.nome as corretor',
                 knex.raw(`group_concat(imagens.path) as imagens`)).groupBy('imoveis.id')
             const serializedImoveis = imoveis.map(imovel => {
                 return{
                     ...imovel,
-                    imagens: imovel.imagens?.split(',')
-                    .map(img => `http://10.0.0.5:3333/uploads/imoveis/${img}`)
+                    imagens: imovel.imagens?.split(',').map(img => `http://10.0.0.5:3333/uploads/imoveis/${img}`)
                 }
             })
             return res.json(serializedImoveis)
@@ -84,8 +82,7 @@ class ImoveisController{
                 const images = files.map(img => {
                     return{
                         path: img.filename,
-                        id_imovel: idImovel[0],
-                        id_corretor: null
+                        id_imovel: idImovel[0]
                     }
                 })
                 await trs('imagens').insert(images)
@@ -136,8 +133,7 @@ class ImoveisController{
                 const images = files.map(img => {
                     return{
                         path: img.filename,
-                        id_imovel: id,
-                        id_corretor: null
+                        id_imovel: id
                     }
                 })
                 await trs('imagens').insert(images)
@@ -156,7 +152,7 @@ class ImoveisController{
         try {
             const { id } = req.params
             const imovel = await knex('imoveis')
-            .leftJoin('imagens','imagens.id_imovel','=','imoveis.id')
+            .innerJoin('imagens','imagens.id_imovel','=','imoveis.id')
             .select('imoveis.*',
                 knex.raw(`group_concat(imagens.path) as imagens`)).groupBy('imoveis.id')
             .where('imoveis.id', id)
@@ -166,7 +162,7 @@ class ImoveisController{
             }
 
             if(imovel[0].imagens){
-                imovel[0].imagens.split(',').forEach(img => 
+                imovel[0].imagens.split(',').forEach((img) => 
                     fs.unlink(path.resolve(__dirname,'..','..','uploads','imoveis', `${img}`), (err) => {
                         if (err) {
                             console.error(err)
@@ -182,6 +178,7 @@ class ImoveisController{
             return res.status(204).send()
 
         } catch (error) {
+            console.log(error)
             res.status(200).send(error)
         }
     }
