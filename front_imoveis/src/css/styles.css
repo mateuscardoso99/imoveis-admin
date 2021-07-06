@@ -122,6 +122,18 @@ text-decoration: none;
   height: 50vh;
 }
 
+.total-imoveis{
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    background-color: red;
+    height: 30px;
+    background: rgb(136, 136, 136);
+}
+.total-imoveis p{
+  font-size: 17px;
+  color: #fff;
+}
 
 @media screen and (max-width: 600px) {
   .sidebar {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
 import Layout from '../../../components/admin/layout/layout'
@@ -17,6 +17,8 @@ const Imoveis = () => {
     useEffect(() => {
         dispatch(imovelGet())
     }, [imovelGet])
+
+    const totalImoveis = useMemo(()=>imoveis.length,[imoveis])
 
     async function apagar(id: number){
         if(window.confirm('Deseja apagar este imóvel?')){
@@ -52,6 +54,9 @@ const Imoveis = () => {
                     </div>
                 </div>
             ))}
+            <div className="total-imoveis">
+                <p>{totalImoveis} Imóveis cadastrados</p>
+            </div>
         </Layout>
     )
 }

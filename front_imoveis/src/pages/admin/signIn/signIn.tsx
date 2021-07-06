@@ -2,18 +2,26 @@ import React, {useState,FormEvent,ChangeEvent} from 'react'
 import {Redirect} from 'react-router-dom'
 import {apiPost} from '../../../services/api'
 
-import {setAccount, setToken, setRefreshToken} from '../../../storage/account'
-
 import '../../../css/login.css'
 import ImageBackground from '../../../assets/bg-01.jpg'
 
+import {useSelector,useDispatch} from 'react-redux'
+import {AplicationState} from '../../../store'
+import {signIn} from '../../../actions/AccountActions'
+
 const SignIn = () => {
 
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const account = useSelector((state: AplicationState)=>state.account.account)
+    const dispatch = useDispatch()
+  
     const [formData, setFormData] = useState({
         login: '',
         password: '',
     })
+    
+    if (account) {
+        return <Redirect to='/imoveis'/>
+    }
 
     function handleInputChange(event: ChangeEvent<HTMLInputElement>){
         const { name, value } = event.target
@@ -28,30 +36,7 @@ const SignIn = () => {
             "login": login,
             "password": password,
         }
-
-        try{
-            const payload = await apiPost('/sign-in', data)
-            if(payload.status === 200){
-                const response = payload ? payload.data : null
-                const account = response ? response.user : null
-                const metadata = response ? response.metadata : null
-
-                const token = metadata ? metadata.token : null
-                const refreshToken = metadata ? metadata.refreshToken : null
-
-                if(account) setAccount(account)
-                if(token) setToken(token)
-                if(refreshToken) setRefreshToken(refreshToken)
-                setIsAuthenticated(true)
-            }
-        }catch(error){
-            console.log('error:',error)
-            alert('Dados incorretos!')
-        }
-    }
-
-    if(isAuthenticated){
-        return <Redirect to='/imoveis'/>
+        dispatch(signIn(data))
     }
 
     return(

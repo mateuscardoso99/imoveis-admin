@@ -29,6 +29,20 @@
     text-decoration: none !important;
     padding: 15px !important;
 }
+.bm-menu button {
+    width: 100px;
+    height: 25px;
+    background-color: #063466;
+    color: #fff !important;
+    font-weight: bold;
+    text-decoration: none !important;
+    padding: 15px !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    border-radius: 15px;
+}
 .bm-burger-bars {
   background: #fff;
 }

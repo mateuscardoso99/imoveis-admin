@@ -13,29 +13,29 @@ const initialState: CorretoresState = {
 
 const reducer: Reducer<CorretoresState> = (state = initialState, action) => {
     const {type, payload} = action
-    switch(action.type){
+    switch(type){
         case CorretorTypes.CORRETOR_CREATE: {
-            const response = action.payload ? action.payload.data : null
+            const response = payload ? payload.data : null
             const data = response ? response.data : null
             return {...state, data}
         }
         case CorretorTypes.CORRETOR_GET: {
-            const response = action.payload ? action.payload.data : null
+            const response = payload ? payload.data : null
             return {...state, corretores: response}
         }
         case CorretorTypes.CORRETOR_GET_SINGLE: {
-            const response = action.payload ? action.payload.data[0] : null
+            const response = payload ? payload.data[0] : null
             return {...state, corretor: response}
         }
         case CorretorTypes.CORRETOR_UPDATE: {
-            const response = action.payload ? action.payload.data : null
+            const response = payload ? payload.data : null
             const data = response ? response.data : null
             return {...state, data}
         }
         case CorretorTypes.CORRETOR_DELETE: {
             console.log('payload.action reducer',action)
-            if(action.payload.id){
-                return {...state, corretores: state.corretores.filter(crt=>crt.id !== action.payload.id)}
+            if(payload.id){
+                return {...state, corretores: state.corretores.filter(crt=>crt.id !== payload.id)}
             }
             else{
                 return {...state}

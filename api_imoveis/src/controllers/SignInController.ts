@@ -18,7 +18,7 @@ class SignInController{
             const refreshToken = generateRefreshJwt({id: user.id})
             const metadata = {token,refreshToken}
 
-            return res.status(200).json({user,metadata})
+            return res.status(200).json({user:user[0].usuario,metadata})
         } catch (error) {
             res.status(500).send(error)
         }

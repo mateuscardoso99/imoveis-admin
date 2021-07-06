@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useParams, Link, useHistory } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import Layout from '../../../components/admin/layout/layout'
 import LoaderButton from '../../../components/admin/loaderButton/loader'
 import {useSelector,useDispatch} from 'react-redux'
@@ -9,11 +9,7 @@ import { Map, TileLayer, Marker } from 'react-leaflet'
 
 import {Carousel} from 'react-responsive-carousel'
 
-import Slider from 'react-slick'
-
 const DetailImovel = () => {
-
-    const history = useHistory()
     const {id}:any = useParams()
 
     const {imovel} = useSelector((state: AplicationState)=>state.imoveis)
@@ -34,10 +30,6 @@ const DetailImovel = () => {
                 console.log(error)
             }
         }
-    }
-
-    function voltar(){
-        history.push('/imoveis')
     }
 
         return(

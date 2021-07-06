@@ -21,6 +21,12 @@ export enum ImovelTypes {
     IMOVEL_UPDATE = 'IMOVEL_UPDATE',
     IMOVEL_DELETE = 'IMOVEL_DELETE'
 }
+
+export enum AccountTypes {
+    SIGN_IN = 'SIGN_IN',
+    INIT_ACCOUNT = 'INIT_ACCOUNT',
+    SIGN_OUT = 'SIGN_OUT'
+}
 /* ---------------------------------------------------- */
 
 export interface User{
@@ -65,4 +71,8 @@ export interface CorretoresState {
 export interface ImoveisState {
     readonly imoveis: Imovel[]
     readonly imovel: Imovel
+}
+
+export interface AccountState {
+    readonly account: string
 }

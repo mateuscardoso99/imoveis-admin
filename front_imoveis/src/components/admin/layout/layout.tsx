@@ -1,10 +1,14 @@
 import React,{ReactNode} from 'react'
-import {Link,useHistory} from 'react-router-dom'
+import {Link,useHistory,Redirect} from 'react-router-dom'
 import {slide as Menu} from 'react-burger-menu'
 import './layout.css'
 import '../../../css/styles.css'
 
 import { FaArrowLeft, FaPlus } from 'react-icons/fa'
+
+import {useSelector,useDispatch} from 'react-redux'
+import {AplicationState} from '../../../store'
+import {signOut} from '../../../actions/AccountActions'
 
 interface Props{
     children: ReactNode
@@ -16,6 +20,13 @@ interface Props{
 const MenuBurger = ({children, title, to, back}: Props) =>{
     const history = useHistory()
 
+    const account = useSelector((state: AplicationState)=>state.account.account)
+    const dispatch = useDispatch()
+
+    if (!account) {
+        return <Redirect to='/sign-in'/>
+    }
+
     const voltar = () => {
         back && history.push(back)
     }
@@ -23,6 +34,12 @@ const MenuBurger = ({children, title, to, back}: Props) =>{
     const next = () => {
         to && history.push(to)
     }
+
+    async function logout(e: any){
+        e.preventDefault()
+        dispatch(signOut())
+    }
+    
 
     return(
         <div>
@@ -32,7 +49,7 @@ const MenuBurger = ({children, title, to, back}: Props) =>{
                     <Link to="/corretores">Corretores</Link>
                     <Link to="/agendamentos">Agendamentos</Link>
                     <Link to="/usuarios">Usuários</Link>
-                    <a href="#">Sair</a>
+                    <button onClick={logout}>Sair</button>
                 </Menu>
                 <div className="title">
                     <h2>{title}</h2>
